@@ -3,6 +3,24 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+// Rotação para a direita
+uint32_t rotr(uint32_t x, uint32_t n)
+{
+    return (x >> n) | (x << (32 - n));
+}
+
+// σ0 e σ1
+uint32_t sigma0(uint32_t x)
+{
+    return rotr(x, 7) ^ rotr(x, 18) ^ (x >> 3);
+}
+
+uint32_t sigma1(uint32_t x)
+{
+    return rotr(x, 17) ^ rotr(x, 19) ^ (x >> 10);
+}
+
 void initialize_hash_values(uint32_t *H)
 {
     H[0] = 0x6a09e667;
@@ -60,6 +78,24 @@ void print_binary(const uint8_t *data, size_t len)
         printf(" ");
         if ((i + 1) % 8 == 0)
             printf("\n"); // Quebra linha a cada 8 bytes
+    }
+}
+
+void message_schedule(const uint8_t *block, uint32_t W[64])
+{
+    // Primeiros 16 valores vêm diretamente do bloco (big-endian)
+    for (int i = 0; i < 16; i++)
+    {
+        W[i] = (block[i * 4] << 24) |
+               (block[i * 4 + 1] << 16) |
+               (block[i * 4 + 2] << 8) |
+               (block[i * 4 + 3]);
+    }
+
+    // Expandindo para W[16..63]
+    for (int i = 16; i < 64; i++)
+    {
+        W[i] = sigma1(W[i - 2]) + W[i - 7] + sigma0(W[i - 15]) + W[i - 16];
     }
 }
 
