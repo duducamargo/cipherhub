@@ -32,6 +32,12 @@ uint32_t Maj(uint32_t x, uint32_t y, uint32_t z)
     return (x & y) ^ (x & z) ^ (y & z);
 }
 
+// Rotação para a direita
+uint32_t rotr(uint32_t x, uint32_t n)
+{
+    return (x >> n) | (x << (32 - n));
+}
+
 uint32_t Sigma0(uint32_t x)
 {
     return rotr(x, 2) ^ rotr(x, 13) ^ rotr(x, 22);
@@ -40,12 +46,6 @@ uint32_t Sigma0(uint32_t x)
 uint32_t Sigma1(uint32_t x)
 {
     return rotr(x, 6) ^ rotr(x, 11) ^ rotr(x, 25);
-}
-
-// Rotação para a direita
-uint32_t rotr(uint32_t x, uint32_t n)
-{
-    return (x >> n) | (x << (32 - n));
 }
 
 // σ0 e σ1
@@ -206,8 +206,11 @@ int main()
     printf("Digite a mensagem: ");
     fgets(input, sizeof(input), stdin);
 
-    uint8_t *padded = sha256_pad_message((const uint8_t *)input, strlen(input), &padded_len);
+    // Remove o '\n' do final da string, se houver
+    input[strcspn(input, "\n")] = 0;
 
+    // Faz o padding
+    uint8_t *padded = sha256_pad_message((const uint8_t *)input, strlen(input), &padded_len);
     if (padded == NULL)
     {
         fprintf(stderr, "Erro ao alocar memoria\n");
@@ -216,6 +219,18 @@ int main()
 
     printf("Mensagem com padding (em binario):\n");
     print_binary(padded, padded_len);
+
+    // Processa cada bloco de 64 bytes
+    size_t num_blocks = padded_len / 64;
+    for (size_t i = 0; i < num_blocks; i++)
+    {
+        uint32_t W[64];
+        message_schedule(padded + i * 64, W);
+        sha256_compress(H, W);
+    }
+
+    printf("\nHash SHA-256 final:\n");
+    print_final_hash(H);
 
     free(padded);
     return 0;
