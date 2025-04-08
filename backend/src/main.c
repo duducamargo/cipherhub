@@ -175,6 +175,26 @@ void sha256_compress(uint32_t *H, const uint32_t W[64])
     H[7] += h;
 }
 
+void print_final_hash(uint32_t H[8])
+{
+    for (int i = 0; i < 8; i++)
+    {
+        printf("%08x", H[i]);
+    }
+    printf("\n");
+}
+
+void get_hash_bytes(uint32_t H[8], uint8_t hash_out[32])
+{
+    for (int i = 0; i < 8; i++)
+    {
+        hash_out[i * 4 + 0] = (H[i] >> 24) & 0xff;
+        hash_out[i * 4 + 1] = (H[i] >> 16) & 0xff;
+        hash_out[i * 4 + 2] = (H[i] >> 8) & 0xff;
+        hash_out[i * 4 + 3] = H[i] & 0xff;
+    }
+}
+
 int main()
 {
     uint32_t H[8];
