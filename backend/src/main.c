@@ -20,9 +20,27 @@ static const uint32_t K[64] = {
     0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5,
     0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
     0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
-    0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
-};
+    0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2};
 
+uint32_t Ch(uint32_t x, uint32_t y, uint32_t z)
+{
+    return (x & y) ^ (~x & z);
+}
+
+uint32_t Maj(uint32_t x, uint32_t y, uint32_t z)
+{
+    return (x & y) ^ (x & z) ^ (y & z);
+}
+
+uint32_t Sigma0(uint32_t x)
+{
+    return rotr(x, 2) ^ rotr(x, 13) ^ rotr(x, 22);
+}
+
+uint32_t Sigma1(uint32_t x)
+{
+    return rotr(x, 6) ^ rotr(x, 11) ^ rotr(x, 25);
+}
 
 // Rotação para a direita
 uint32_t rotr(uint32_t x, uint32_t n)
@@ -117,6 +135,44 @@ void message_schedule(const uint8_t *block, uint32_t W[64])
     {
         W[i] = sigma1(W[i - 2]) + W[i - 7] + sigma0(W[i - 15]) + W[i - 16];
     }
+}
+
+void sha256_compress(uint32_t *H, const uint32_t W[64])
+{
+    // Inicializa variáveis temporárias com os registradores H0.....H7
+    uint32_t a = H[0];
+    uint32_t b = H[1];
+    uint32_t c = H[2];
+    uint32_t d = H[3];
+    uint32_t e = H[4];
+    uint32_t f = H[5];
+    uint32_t g = H[6];
+    uint32_t h = H[7];
+
+    for (int i = 0; i < 64; i++)
+    {
+        uint32_t T1 = h + Sigma1(e) + Ch(e, f, g) + K[i] + W[i];
+        uint32_t T2 = Sigma0(a) + Maj(a, b, c);
+
+        h = g;
+        g = f;
+        f = e;
+        e = d + T1;
+        d = c;
+        c = b;
+        b = a;
+        a = T1 + T2;
+    }
+
+    // Atualiza os valores dos registradores
+    H[0] += a;
+    H[1] += b;
+    H[2] += c;
+    H[3] += d;
+    H[4] += e;
+    H[5] += f;
+    H[6] += g;
+    H[7] += h;
 }
 
 int main()
