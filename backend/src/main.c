@@ -3,6 +3,18 @@
 #include <stdlib.h>
 #include <string.h>
 
+void initialize_hash_values(uint32_t *H)
+{
+    H[0] = 0x6a09e667;
+    H[1] = 0xbb67ae85;
+    H[2] = 0x3c6ef372;
+    H[3] = 0xa54ff53a;
+    H[4] = 0x510e527f;
+    H[5] = 0x9b05688c;
+    H[6] = 0x1f83d9ab;
+    H[7] = 0x5be0cd19;
+}
+
 uint8_t *sha256_pad_message(const uint8_t *message, size_t message_len, size_t *new_len_out)
 {
     size_t bit_len = message_len * 8;
@@ -53,6 +65,9 @@ void print_binary(const uint8_t *data, size_t len)
 
 int main()
 {
+    uint32_t H[8];
+    initialize_hash_values(H);
+
     char input[256];
     size_t padded_len;
 
