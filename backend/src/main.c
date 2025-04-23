@@ -195,13 +195,33 @@ void get_hash_bytes(uint32_t H[8], uint8_t hash_out[32])
     }
 }
 
-int hexchar_to_int(char c) {
-    if ('0' <= c && c <= '9') return c - '0';
-    if ('a' <= c && c <= 'f') return 10 + (c - 'a');
-    if ('A' <= c && c <= 'F') return 10 + (c - 'A');
+int hexchar_to_int(char c)
+{
+    if ('0' <= c && c <= '9')
+        return c - '0';
+    if ('a' <= c && c <= 'f')
+        return 10 + (c - 'a');
+    if ('A' <= c && c <= 'F')
+        return 10 + (c - 'A');
     return -1;
 }
 
+int parse_hex_string(const char *hex, uint8_t *output, size_t output_len)
+{
+    size_t len = strlen(hex);
+    if (len != output_len * 2)
+        return 0;
+
+    for (size_t i = 0; i < output_len; i++)
+    {
+        int hi = hexchar_to_int(hex[2 * i]);
+        int lo = hexchar_to_int(hex[2 * i + 1]);
+        if (hi < 0 || lo < 0)
+            return 0;
+        output[i] = (hi << 4) | lo;
+    }
+    return 1;
+}
 
 int main()
 {
