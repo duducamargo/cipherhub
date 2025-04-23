@@ -195,6 +195,14 @@ void get_hash_bytes(uint32_t H[8], uint8_t hash_out[32])
     }
 }
 
+int hexchar_to_int(char c) {
+    if ('0' <= c && c <= '9') return c - '0';
+    if ('a' <= c && c <= 'f') return 10 + (c - 'a');
+    if ('A' <= c && c <= 'F') return 10 + (c - 'A');
+    return -1;
+}
+
+
 int main()
 {
     uint32_t H[8];
