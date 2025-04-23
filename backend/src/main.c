@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Constantes SHA-256 (primeiros 32 bits das raízes cúbicas dos 64 primeiros primos)
+// Constantes SHA-256 (primeiros 32 bits das raizes cubicas dos 64 primeiros primos)
 static const uint32_t K[64] = {
     0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
     0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
@@ -32,7 +32,7 @@ uint32_t Maj(uint32_t x, uint32_t y, uint32_t z)
     return (x & y) ^ (x & z) ^ (y & z);
 }
 
-// Rotação para a direita
+// Rotacao para a direita
 uint32_t rotr(uint32_t x, uint32_t n)
 {
     return (x >> n) | (x << (32 - n));
@@ -48,7 +48,7 @@ uint32_t Sigma1(uint32_t x)
     return rotr(x, 6) ^ rotr(x, 11) ^ rotr(x, 25);
 }
 
-// σ0 e σ1
+// sigma0 e sigma1
 uint32_t sigma0(uint32_t x)
 {
     return rotr(x, 7) ^ rotr(x, 18) ^ (x >> 3);
@@ -95,7 +95,7 @@ uint8_t *sha256_pad_message(const uint8_t *message, size_t message_len, size_t *
 
     padded_message[message_len] = 0x80;
 
-    // Adicionar tamanho original em bits (big-endian) nos últimos 8 bytes
+    // Adicionar tamanho original em bits (big-endian) nos ultimos 8 bytes
     for (int i = 0; i < 8; i++)
     {
         padded_message[total_len - 1 - i] = (bit_len >> (i * 8)) & 0xFF;
@@ -121,7 +121,7 @@ void print_binary(const uint8_t *data, size_t len)
 
 void message_schedule(const uint8_t *block, uint32_t W[64])
 {
-    // Primeiros 16 valores vêm diretamente do bloco (big-endian)
+    // Primeiros 16 valores vem diretamente do bloco (big-endian)
     for (int i = 0; i < 16; i++)
     {
         W[i] = (block[i * 4] << 24) |
@@ -139,7 +139,7 @@ void message_schedule(const uint8_t *block, uint32_t W[64])
 
 void sha256_compress(uint32_t *H, const uint32_t W[64])
 {
-    // Inicializa variáveis temporárias com os registradores H0.....H7
+    // Inicializa variaveis temporarias com os registradores H0.....H7
     uint32_t a = H[0];
     uint32_t b = H[1];
     uint32_t c = H[2];
@@ -223,26 +223,31 @@ int parse_hex_string(const char *hex, uint8_t *output, size_t output_len)
     return 1;
 }
 
-int main()
+int menu()
 {
-    char nome_arquivo[256];
-    char input_hash[65]; // SHA-256 = 64 caracteres hex + null terminador
+    int opcao;
+    printf("\n=== MENU SHA-256 ===\n");
+    printf("1. Gerar hash de um arquivo\n");
+    printf("2. Gerar hash de um texto\n");
+    printf("3. Comparar hash de um arquivo com uma hash fornecida\n");
+    printf("4. Comparar dois arquivos\n");
+    printf("0. Sair\n");
+    printf("Escolha uma opcao: ");
+    scanf("%d", &opcao);
+    getchar(); // limpa o \n do buffer
+    return opcao;
+}
+
+void gerar_hash(const char *nome_arquivo, uint8_t hash_out[32])
+{
     char caminho_completo[300];
-    uint32_t H[8];
-    size_t padded_len;
-    FILE *file;
+    snprintf(caminho_completo, sizeof(caminho_completo), "../../files/%s", nome_arquivo);
 
-    printf("Nome do arquivo dentro da pasta 'arquivos/': ");
-    fgets(nome_arquivo, sizeof(nome_arquivo), stdin);
-    nome_arquivo[strcspn(nome_arquivo, "\n")] = 0;
-
-    snprintf(caminho_completo, sizeof(caminho_completo), "arquivos/%s", nome_arquivo);
-
-    file = fopen(caminho_completo, "rb");
+    FILE *file = fopen(caminho_completo, "rb");
     if (!file)
     {
         perror("Erro ao abrir o arquivo");
-        return 1;
+        exit(1);
     }
 
     fseek(file, 0, SEEK_END);
@@ -250,56 +255,158 @@ int main()
     rewind(file);
 
     uint8_t *data = (uint8_t *)malloc(fsize);
-    if (!data)
-    {
-        fclose(file);
-        fprintf(stderr, "Erro ao alocar memória\n");
-        return 1;
-    }
-
     fread(data, 1, fsize, file);
     fclose(file);
 
+    size_t padded_len;
     uint8_t *padded = sha256_pad_message(data, fsize, &padded_len);
     free(data);
-    if (!padded)
-    {
-        fprintf(stderr, "Erro ao realizar o padding\n");
-        return 1;
-    }
 
+    uint32_t H[8];
     initialize_hash_values(H);
-    size_t num_blocks = padded_len / 64;
-    for (size_t i = 0; i < num_blocks; i++)
+
+    for (size_t i = 0; i < padded_len / 64; i++)
     {
         uint32_t W[64];
         message_schedule(padded + i * 64, W);
         sha256_compress(H, W);
     }
 
-    uint8_t final_hash[32];
-    get_hash_bytes(H, final_hash);
+    get_hash_bytes(H, hash_out);
     free(padded);
+}
 
-    printf("Digite a hash de referência para comparação:\n");
-    fgets(input_hash, sizeof(input_hash), stdin);
-    input_hash[strcspn(input_hash, "\n")] = 0;
-
-    uint8_t reference_hash[32];
-    if (!parse_hex_string(input_hash, reference_hash, 32))
+void print_hash(uint8_t hash[32])
+{
+    for (int i = 0; i < 32; i++)
     {
-        fprintf(stderr, "Hash fornecida inválida (formato hexadecimal esperado).\n");
-        return 1;
+        printf("%02x", hash[i]);
     }
+    printf("\n");
+}
 
-    if (memcmp(final_hash, reference_hash, 32) == 0)
-    {
-        printf("\n✅ Arquivo AUTÊNTICO — Hashes coincidem.\n");
-    }
-    else
-    {
-        printf("\n❌ Arquivo ALTERADO ou diferente — Hashes não coincidem.\n");
-    }
+int main()
+{
+    int opcao;
 
+    do
+    {
+        opcao = menu();
+
+        if (opcao == 1)
+        {
+            char nome_arquivo[256];
+            printf("Nome do arquivo em 'files/': ");
+            fgets(nome_arquivo, sizeof(nome_arquivo), stdin);
+            nome_arquivo[strcspn(nome_arquivo, "\n")] = 0;
+
+            uint8_t hash[32];
+            gerar_hash(nome_arquivo, hash);
+
+            printf("Hash SHA-256 do arquivo:\n");
+            print_hash(hash);
+        }
+
+        else if (opcao == 2)
+        {
+            uint32_t H[8];
+            initialize_hash_values(H);
+
+            char input[256];
+            size_t padded_len;
+
+            printf("Digite a mensagem: ");
+            fgets(input, sizeof(input), stdin);
+
+            // Remove o '\n' do final da string, se houver
+            input[strcspn(input, "\n")] = 0;
+
+            // Faz o padding
+            uint8_t *padded = sha256_pad_message((const uint8_t *)input, strlen(input), &padded_len);
+            if (padded == NULL)
+            {
+                fprintf(stderr, "Erro ao alocar memoria\n");
+                return 1;
+            }
+
+            printf("Mensagem com padding (em binario):\n");
+            print_binary(padded, padded_len);
+
+            // Processa cada bloco de 64 bytes
+            size_t num_blocks = padded_len / 64;
+            for (size_t i = 0; i < num_blocks; i++)
+            {
+                uint32_t W[64];
+                message_schedule(padded + i * 64, W);
+                sha256_compress(H, W);
+            }
+
+            printf("\nHash SHA-256 final:\n");
+            print_final_hash(H);
+
+            free(padded);
+        }
+
+        else if (opcao == 3)
+        {
+            char nome_arquivo[256], input_hash[65];
+            printf("Nome do arquivo em 'files/': ");
+            fgets(nome_arquivo, sizeof(nome_arquivo), stdin);
+            nome_arquivo[strcspn(nome_arquivo, "\n")] = 0;
+
+            printf("Digite a hash de referencia:\n");
+            fgets(input_hash, sizeof(input_hash), stdin);
+            input_hash[strcspn(input_hash, "\n")] = 0;
+
+            uint8_t hash_calculada[32], hash_referencia[32];
+            gerar_hash(nome_arquivo, hash_calculada);
+
+            if (!parse_hex_string(input_hash, hash_referencia, 32))
+            {
+                fprintf(stderr, "Hash invalida\n");
+                continue;
+            }
+
+            if (memcmp(hash_calculada, hash_referencia, 32) == 0)
+            {
+                printf("✅ Hashes coincidem\n");
+            }
+            else
+            {
+                printf("❌ Hashes diferentes\n");
+            }
+        }
+        else if (opcao == 4)
+        {
+            char arquivo1[256], arquivo2[256];
+            printf("Nome do primeiro arquivo: ");
+            fgets(arquivo1, sizeof(arquivo1), stdin);
+            arquivo1[strcspn(arquivo1, "\n")] = 0;
+
+            printf("Nome do segundo arquivo: ");
+            fgets(arquivo2, sizeof(arquivo2), stdin);
+            arquivo2[strcspn(arquivo2, "\n")] = 0;
+
+            uint8_t hash1[32], hash2[32];
+            gerar_hash(arquivo1, hash1);
+            gerar_hash(arquivo2, hash2);
+
+            if (memcmp(hash1, hash2, 32) == 0)
+            {
+                printf("✅ Arquivos identicos (mesma hash)\n");
+            }
+            else
+            {
+                printf("❌ Arquivos diferentes (hash distinta)\n");
+            }
+        }
+        else if (opcao != 0)
+        {
+            printf("Opcao invalida\n");
+        }
+
+    } while (opcao != 0);
+
+    printf("Encerrando...\n");
     return 0;
 }
