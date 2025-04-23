@@ -225,30 +225,50 @@ int parse_hex_string(const char *hex, uint8_t *output, size_t output_len)
 
 int main()
 {
+    char nome_arquivo[256];
+    char input_hash[65]; // SHA-256 = 64 caracteres hex + null terminador
+    char caminho_completo[300];
     uint32_t H[8];
-    initialize_hash_values(H);
-
-    char input[256];
     size_t padded_len;
+    FILE *file;
 
-    printf("Digite a mensagem: ");
-    fgets(input, sizeof(input), stdin);
+    printf("Nome do arquivo dentro da pasta 'arquivos/': ");
+    fgets(nome_arquivo, sizeof(nome_arquivo), stdin);
+    nome_arquivo[strcspn(nome_arquivo, "\n")] = 0;
 
-    // Remove o '\n' do final da string, se houver
-    input[strcspn(input, "\n")] = 0;
+    snprintf(caminho_completo, sizeof(caminho_completo), "arquivos/%s", nome_arquivo);
 
-    // Faz o padding
-    uint8_t *padded = sha256_pad_message((const uint8_t *)input, strlen(input), &padded_len);
-    if (padded == NULL)
+    file = fopen(caminho_completo, "rb");
+    if (!file)
     {
-        fprintf(stderr, "Erro ao alocar memoria\n");
+        perror("Erro ao abrir o arquivo");
         return 1;
     }
 
-    printf("Mensagem com padding (em binario):\n");
-    print_binary(padded, padded_len);
+    fseek(file, 0, SEEK_END);
+    long fsize = ftell(file);
+    rewind(file);
 
-    // Processa cada bloco de 64 bytes
+    uint8_t *data = (uint8_t *)malloc(fsize);
+    if (!data)
+    {
+        fclose(file);
+        fprintf(stderr, "Erro ao alocar memória\n");
+        return 1;
+    }
+
+    fread(data, 1, fsize, file);
+    fclose(file);
+
+    uint8_t *padded = sha256_pad_message(data, fsize, &padded_len);
+    free(data);
+    if (!padded)
+    {
+        fprintf(stderr, "Erro ao realizar o padding\n");
+        return 1;
+    }
+
+    initialize_hash_values(H);
     size_t num_blocks = padded_len / 64;
     for (size_t i = 0; i < num_blocks; i++)
     {
@@ -257,9 +277,29 @@ int main()
         sha256_compress(H, W);
     }
 
-    printf("\nHash SHA-256 final:\n");
-    print_final_hash(H);
-
+    uint8_t final_hash[32];
+    get_hash_bytes(H, final_hash);
     free(padded);
+
+    printf("Digite a hash de referência para comparação:\n");
+    fgets(input_hash, sizeof(input_hash), stdin);
+    input_hash[strcspn(input_hash, "\n")] = 0;
+
+    uint8_t reference_hash[32];
+    if (!parse_hex_string(input_hash, reference_hash, 32))
+    {
+        fprintf(stderr, "Hash fornecida inválida (formato hexadecimal esperado).\n");
+        return 1;
+    }
+
+    if (memcmp(final_hash, reference_hash, 32) == 0)
+    {
+        printf("\n✅ Arquivo AUTÊNTICO — Hashes coincidem.\n");
+    }
+    else
+    {
+        printf("\n❌ Arquivo ALTERADO ou diferente — Hashes não coincidem.\n");
+    }
+
     return 0;
 }
