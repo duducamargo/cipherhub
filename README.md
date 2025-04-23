@@ -1,7 +1,7 @@
 
 # Sistema de Criptografia
 
-Este projeto consiste em um sistema completo de criptografia baseado no algoritmo **SHA-256**, com backend em **C** e frontend em **React**. A aplicação permite:
+Este projeto consiste em um sistema completo de criptografia baseado inicialmente no algoritmo **SHA-256**, com backend em **C** e frontend em **React**. A aplicação permite:
 
 - Geração de hashes SHA-256 a partir de arquivos e textos
 - Comparação de hashes entre arquivos
