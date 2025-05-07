@@ -10,6 +10,26 @@ int gcd(int a, int b) {
     return a;
 }
 
+
+// Algoritmo estendido de Euclides para inverso modular
+int modinv(int e, int phi) {
+    int t = 0, newt = 1;
+    int r = phi, newr = e;
+    while (newr != 0) {
+        int quotient = r / newr;
+        int temp = newt;
+        newt = t - quotient * newt;
+        t = temp;
+
+        temp = newr;
+        newr = r - quotient * newr;
+        r = temp;
+    }
+    if (r > 1) return -1;  // sem inverso
+    if (t < 0) t += phi;
+    return t;
+}
+
 int main()
 {
     int opcao;
