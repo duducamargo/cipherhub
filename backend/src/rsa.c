@@ -43,15 +43,37 @@ int mod_exp(int base, int exp, int mod) {
     return result;
 }
 
-int main()
-{
-    int opcao;
-    printf("Escolha uma opcao:\n");
-    printf("1. Gerar hash SHA-256 de um arquivo\n");
-    printf("2. Gerar hash SHA-256 de uma mensagem\n");
-    printf("3. Verificar hash SHA-256 de um arquivo\n");
-    printf("4. Sair\n");
-    scanf("%d", &opcao);
-    getchar(); 
-    return opcao;
+int main() {
+    // === Etapa 1: Gerar chaves ===
+    int p = 61;  // primo 1
+    int q = 53;  // primo 2
+    int n = p * q;           // 3233
+    int phi = (p - 1) * (q - 1);  // 3120
+
+    int e = 17;  // chave pública (escolhida)
+    if (gcd(e, phi) != 1) {
+        printf("Erro: 'e' não é coprimo de φ(n)\n");
+        return 1;
+    }
+
+    int d = modinv(e, phi);  // chave privada
+    if (d == -1) {
+        printf("Erro ao calcular o inverso modular\n");
+        return 1;
+    }
+
+    printf("Chave pública: (e=%d, n=%d)\n", e, n);
+    printf("Chave privada: (d=%d, n=%d)\n", d, n);
+
+    // === Etapa 2: Criptografar ===
+    int mensagem = 89;  // número a ser criptografado (deve ser < n)
+    int criptografada = mod_exp(mensagem, e, n);
+    printf("\nMensagem original: %d\n", mensagem);
+    printf("Mensagem criptografada: %d\n", criptografada);
+
+    // === Etapa 3: Descriptografar ===
+    int descriptografada = mod_exp(criptografada, d, n);
+    printf("Mensagem descriptografada: %d\n", descriptografada);
+
+    return 0;
 }
