@@ -7,8 +7,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const shaPath = path.join(__dirname, "sha256.exe");
-const rsaPath = path.join(__dirname, "rsa.exe");
+const shaPath = path.join(__dirname, "src", "output", "sha256.exe");
+const rsaPath = path.join(__dirname, "src", "output", "rsa.exe");
 
 app.post("/sha256", (req, res) => {
   const { text } = req.body;

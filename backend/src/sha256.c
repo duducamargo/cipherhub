@@ -289,130 +289,34 @@ int main(int argc, char *argv[])
 {
     if (argc != 2)
     {
-        fprintf(stderr, "Uso: %s <nome_arquivo>\n", argv[0]);
+        fprintf(stderr, "Uso: %s \"mensagem\"\n", argv[0]);
         return 1;
     }
 
-    int opcao;
+    const char *input = argv[1];
+    size_t padded_len;
 
-    do
+    uint8_t *padded = sha256_pad_message((const uint8_t *)input, strlen(input), &padded_len);
+    if (!padded)
     {
-        opcao = menu();
+        fprintf(stderr, "Erro ao alocar memória para padding\n");
+        return 1;
+    }
 
-        if (opcao == 1)
-        {
-            char nome_arquivo[256];
-            printf("Nome do arquivo em 'files/': ");
-            fgets(nome_arquivo, sizeof(nome_arquivo), stdin);
-            nome_arquivo[strcspn(nome_arquivo, "\n")] = 0;
+    uint32_t H[8];
+    initialize_hash_values(H);
 
-            uint8_t hash[32];
-            gerar_hash(nome_arquivo, hash);
+    for (size_t i = 0; i < padded_len / 64; i++)
+    {
+        uint32_t W[64];
+        message_schedule(padded + i * 64, W);
+        sha256_compress(H, W);
+    }
 
-            printf("Hash SHA-256 do arquivo:\n");
-            print_hash(hash);
-        }
+    uint8_t hash_final[32];
+    get_hash_bytes(H, hash_final);
+    print_hash(hash_final);
 
-        else if (opcao == 2)
-        {
-            uint32_t H[8];
-            initialize_hash_values(H);
-
-            char input[256];
-            size_t padded_len;
-
-            printf("Digite a mensagem: ");
-            fgets(input, sizeof(input), stdin);
-
-            // Remove o '\n' do final da string, se houver
-            input[strcspn(input, "\n")] = 0;
-
-            // Faz o padding
-            uint8_t *padded = sha256_pad_message((const uint8_t *)input, strlen(input), &padded_len);
-            if (padded == NULL)
-            {
-                fprintf(stderr, "Erro ao alocar memoria\n");
-                return 1;
-            }
-
-            printf("Mensagem com padding (em binario):\n");
-            print_binary(padded, padded_len);
-
-            // Processa cada bloco de 64 bytes
-            size_t num_blocks = padded_len / 64;
-            for (size_t i = 0; i < num_blocks; i++)
-            {
-                uint32_t W[64];
-                message_schedule(padded + i * 64, W);
-                sha256_compress(H, W);
-            }
-
-            printf("\nHash SHA-256 final:\n");
-            print_final_hash(H);
-
-            free(padded);
-        }
-
-        else if (opcao == 3)
-        {
-            char nome_arquivo[256], input_hash[65];
-            printf("Nome do arquivo em 'files/': ");
-            fgets(nome_arquivo, sizeof(nome_arquivo), stdin);
-            nome_arquivo[strcspn(nome_arquivo, "\n")] = 0;
-
-            printf("Digite a hash de referencia:\n");
-            fgets(input_hash, sizeof(input_hash), stdin);
-            input_hash[strcspn(input_hash, "\n")] = 0;
-
-            uint8_t hash_calculada[32], hash_referencia[32];
-            gerar_hash(nome_arquivo, hash_calculada);
-
-            if (!parse_hex_string(input_hash, hash_referencia, 32))
-            {
-                fprintf(stderr, "Hash invalida\n");
-                continue;
-            }
-
-            if (memcmp(hash_calculada, hash_referencia, 32) == 0)
-            {
-                printf("✅ Hashes coincidem\n");
-            }
-            else
-            {
-                printf("❌ Hashes diferentes\n");
-            }
-        }
-        else if (opcao == 4)
-        {
-            char arquivo1[256], arquivo2[256];
-            printf("Nome do primeiro arquivo: ");
-            fgets(arquivo1, sizeof(arquivo1), stdin);
-            arquivo1[strcspn(arquivo1, "\n")] = 0;
-
-            printf("Nome do segundo arquivo: ");
-            fgets(arquivo2, sizeof(arquivo2), stdin);
-            arquivo2[strcspn(arquivo2, "\n")] = 0;
-
-            uint8_t hash1[32], hash2[32];
-            gerar_hash(arquivo1, hash1);
-            gerar_hash(arquivo2, hash2);
-
-            if (memcmp(hash1, hash2, 32) == 0)
-            {
-                printf("✅ Arquivos identicos (mesma hash)\n");
-            }
-            else
-            {
-                printf("❌ Arquivos diferentes (hash distinta)\n");
-            }
-        }
-        else if (opcao != 0)
-        {
-            printf("Opcao invalida\n");
-        }
-
-    } while (opcao != 0);
-
-    printf("Encerrando...\n");
+    free(padded);
     return 0;
 }
