@@ -1,0 +1,14 @@
+POST http://localhost:3001/sha256
+Content-Type: application/json
+
+{
+  "text": "mensagem de teste"
+}
+
+###
+POST http://localhost:3001/rsa
+Content-Type: application/json
+
+{
+  "text": "mensagem de teste"
+}
