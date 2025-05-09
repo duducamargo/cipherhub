@@ -87,7 +87,6 @@ int main(int argc, char *argv[])
     ull e = 17;
     ull d = modinv(e, phi);
 
-    printf("e = %llu, phi = %llu, d = %llu\n", e, phi, d);
 
     if (d == 0 || gcd(e, phi) != 1)
     {
