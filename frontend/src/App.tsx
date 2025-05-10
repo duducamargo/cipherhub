@@ -1,35 +1,46 @@
 "use client";
 import React from "react";
 
+import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
+
 import { AnimatePresence, motion } from "motion/react";
 import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
 
 export default function App() {
   return (
     <>
+      <BackgroundBeamsWithCollision>
+        <h2 className="text-2xl relative z-20 md:text-4xl lg:text-[57px] font-bold text-center text-white font-sans tracking-tight">
+          Conhecimento em segurança e criptografia{" "}
+          <div className="relative mx-auto inline-block w-max [filter:drop-shadow(0px_1px_3px_rgba(27,_37,_80,_0.14))]">
+            <div className="absolute left-0 top-[1px] bg-clip-text bg-no-repeat text-transparent bg-gradient-to-r py-4 from-purple-500 via-violet-500 to-pink-500 [text-shadow:0_0_rgba(0,0,0,0.1)]">
+              <span className="">CipherHub.</span>
+            </div>
+            <div className="relative bg-clip-text text-transparent bg-no-repeat bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 py-4">
+              <span className="">CipherHub.</span>
+            </div>
+          </div>
+        </h2>
+      </BackgroundBeamsWithCollision>
       <div className="py-20 flex flex-col lg:flex-row items-center justify-center bg-[#111] text-white w-full gap-4 mx-auto px-8">
         <Card title="Criptografia Base 64" icon={<AceternityIcon />}>
           <CanvasRevealEffect
             animationSpeed={5.1}
-            containerClassName="bg-green-600"
+            containerClassName="bg-green-600 cursor-pointer"
           />
         </Card>
         <Card title="Criptografia SHA-256" icon={<AceternityIcon />}>
           <CanvasRevealEffect
-            animationSpeed={3}
-            containerClassName="bg-red-700"
-            colors={[
-              [255, 0, 0],
-            ]}
-            dotSize={2}
+            animationSpeed={5.1}
+            containerClassName="bg-red-800 cursor-pointer"
+            colors={[[255, 0, 0]]}
           />
-          {/* Radial gradient for the cute fade */}
-          <div className="absolute inset-0 [mask-image:radial-gradient(400px_at_center,white,transparent)] bg-black/50 dark:bg-black/90" />
         </Card>
+
         <Card title="Criptografia RSA" icon={<AceternityIcon />}>
           <CanvasRevealEffect
             animationSpeed={3}
-            containerClassName="bg-sky-600"
+            containerClassName="bg-sky-600 cursor-pointer"
             colors={[[125, 211, 252]]}
           />
         </Card>
