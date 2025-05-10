@@ -23,7 +23,7 @@ export default function Navbar() {
     >
       <nav className="flex items-center justify-between max-w-7xl mx-auto">
         {/* Logo */}
-        <div className="text-xl font-bold text-white tracking-tight">
+        <div className="text-2xl font-bold text-white tracking-tight cursor-pointer" onClick={() => location.href = "/"}>
           <span className="bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 text-transparent bg-clip-text">
             CipherHub
           </span>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "motion/react";
@@ -70,7 +71,7 @@ export const BackgroundBeamsWithCollision = ({
     <div
       ref={parentRef}
       className={cn(
-        "h-96 md:h-screen bg-gradient-to-b from-[#000] to-[#111] relative flex items-center w-full justify-center overflow-hidden",
+        "h-96 md:h-[101vh] bg-gradient-to-b from-[#000] to-[#111] relative flex items-center w-full justify-center overflow-hidden",
         "after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r after:from-purple-500 after:via-violet-500 after:to-pink-500 after:rounded-full after:shadow-md",
         className
       )}
