@@ -1,16 +1,17 @@
-"use client";
-import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
 
-import HomeTitle from "./components/HomeTitle";
-import CanvasRevealHome from "./components/CanvasRevealHome";
-
-export default function App() {
+function App() {
   return (
-    <div className="bg-[#111] text-white w-full min-h-screen flex flex-col items-center justify-center">
-
-      <HomeTitle />
-      
-      <CanvasRevealHome />
+    <div>
+      <Routes>
+        <Route
+          path="/"
+          element={<Home />}
+        />
+      </Routes>
     </div>
   );
-};
+}
+
+export default App;

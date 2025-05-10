@@ -32,22 +32,22 @@ export default function Navbar() {
         {/* Menu */}
         <ul className="flex items-center gap-6 text-sm md:text-base font-medium text-neutral-200">
           <li>
-            <a href="#inicio" className="hover:text-white transition">
+            <a href="/" className="hover:text-white transition">
               Início
             </a>
           </li>
           <li>
-            <a href="#sha256" className="hover:text-white transition">
+            <a href="/sha256" className="hover:text-white transition">
               SHA-256
             </a>
           </li>
           <li>
-            <a href="#rsa" className="hover:text-white transition">
+            <a href="/rsa" className="hover:text-white transition">
               RSA
             </a>
           </li>
           <li>
-            <a href="#sobre" className="hover:text-white transition">
+            <a href="/sobre" className="hover:text-white transition">
               Sobre
             </a>
           </li>
