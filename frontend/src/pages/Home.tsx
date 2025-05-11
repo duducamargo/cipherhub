@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 
 import HomeTitle from "../components/HomeTitle";
 import CanvasRevealHome from "../components/CanvasRevealHome";

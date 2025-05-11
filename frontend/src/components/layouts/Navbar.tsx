@@ -7,7 +7,7 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       const currentY = window.scrollY;
-      setShow(currentY < lastScrollY);
+      setShow(currentY < lastScrollY || currentY < 10); // mostra se voltar ou estiver no topo
       setLastScrollY(currentY);
     };
 
@@ -17,39 +17,34 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full px-8 py-6 border-b border-neutral-800 shadow-md
-    backdrop-blur-md backdrop-saturate-250 bg-black/55 transition-transform duration-300
-    ${show ? "translate-y-0" : "-translate-y-full"}`}
+      className={`fixed top-0 z-50 w-full border-b border-neutral-800 shadow-md
+      backdrop-blur-md backdrop-saturate-200 bg-black/60 transition-transform duration-300
+      ${show ? "translate-y-0" : "-translate-y-full"}`}
     >
-      <nav className="flex items-center justify-between max-w-7xl mx-auto">
+      <nav className="flex items-center justify-between w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-4">
         {/* Logo */}
-        <div className="text-2xl font-bold text-white tracking-tight cursor-pointer" onClick={() => location.href = "/"}>
+        <div
+          className="text-2xl font-bold text-white tracking-tight cursor-pointer"
+          onClick={() => (location.href = "/")}
+        >
           <span className="bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 text-transparent bg-clip-text">
             CipherHub
           </span>
         </div>
 
         {/* Menu */}
-        <ul className="flex items-center gap-6 text-sm md:text-base font-medium text-neutral-200">
+        <ul className="flex items-center gap-4 sm:gap-6 text-sm md:text-base font-medium text-neutral-200">
           <li>
-            <a href="/" className="hover:text-white transition">
-              Início
-            </a>
+            <a href="/" className="hover:text-white transition">Início</a>
           </li>
           <li>
-            <a href="/sha256" className="hover:text-white transition">
-              SHA-256
-            </a>
+            <a href="/sha256" className="hover:text-white transition">SHA-256</a>
           </li>
           <li>
-            <a href="/rsa" className="hover:text-white transition">
-              RSA
-            </a>
+            <a href="/rsa" className="hover:text-white transition">RSA</a>
           </li>
           <li>
-            <a href="/sobre" className="hover:text-white transition">
-              Sobre
-            </a>
+            <a href="/sobre" className="hover:text-white transition">Sobre</a>
           </li>
         </ul>
       </nav>
