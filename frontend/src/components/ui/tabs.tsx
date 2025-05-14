@@ -69,7 +69,7 @@ export const Tabs = ({
               />
             )}
 
-            <span className="relative block "
+            <span className="relative block hover:scale-105 transition-all duration-200 ease-in-out cursor-pointer"
               style={{
                 color: active.value === tab.value ? "#000" : "#fff",
               }}>

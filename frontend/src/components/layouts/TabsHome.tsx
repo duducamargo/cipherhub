@@ -3,6 +3,7 @@
 import { Tabs } from "../ui/tabs";
 import { TabDefinition } from "../TabDefinition";
 import { TabHistory } from "../TabHistory";
+import { TabSymetricEncryption } from "../TabSymmetricEncryption";
 
 export function TabsHome() {
   const tabs = [
@@ -10,7 +11,7 @@ export function TabsHome() {
       title: "Definição",
       value: "definicao",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
+        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-600 to-violet-900">
           <TabDefinition />
         </div>
       ),
@@ -19,7 +20,7 @@ export function TabsHome() {
       title: "História",
       value: "historia",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
+        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-600 to-violet-900">
           <TabHistory />
         </div>
       ),
@@ -28,8 +29,8 @@ export function TabsHome() {
       title: "Criptografia Simétrica",
       value: "criptografia-simetrica",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
-          <TabDefinition />
+        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-600 to-violet-900">
+          <TabSymetricEncryption />
         </div>
       ),
     },
@@ -37,7 +38,7 @@ export function TabsHome() {
       title: "Criptografia Assimétrica",
       value: "criptografia-assimetrica",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-700 to-violet-900">
+        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-600 to-violet-900">
           <TabDefinition />
         </div>
       ),
@@ -46,7 +47,7 @@ export function TabsHome() {
   ];
 
   return (
-    <div className="h-[210rem] md:h-[210rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start my-24">
+    <div className="h-[180rem] md:h-[210rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start my-24">
       <Tabs tabs={tabs} />
     </div>
   );
