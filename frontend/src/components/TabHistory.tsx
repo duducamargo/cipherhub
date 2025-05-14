@@ -2,7 +2,7 @@
 import React from "react";
 
 import { twMerge } from "tailwind-merge";
-import { TracingBeam } from "../components/ui/tracing-bream";
+import { TracingBeam } from "./ui/tracing-bream";
 
 export function TabHistory() {
   return (
@@ -14,9 +14,7 @@ export function TabHistory() {
               {item.badge}
             </h2>
 
-            <p className={twMerge( "text-xl mb-4")}>
-              {item.title}
-            </p>
+            <p className={twMerge("text-xl mb-4")}>{item.title}</p>
 
             <div className="text-sm  prose prose-sm dark:prose-invert">
               {item?.image && (
@@ -39,78 +37,107 @@ export function TabHistory() {
 
 const dummyContent = [
   {
-    title: "Lorem Ipsum Dolor Sit Amet",
+    title: "As origens da criptografia",
+    badge: "Antiguidade",
+    image:
+      "https://www.researchgate.net/publication/354197235/figure/fig1/AS:11431281105296111@1670352667550/Figura-6-Modelo-de-desafio-envolvendo-a-cifra-de-Cesar-Fonte-Autoras.png",
     description: (
       <>
         <p>
-          Sit duis est minim proident non nisi velit non consectetur. Esse
-          adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt
-          Lorem ut aliqua anim do. Duis cupidatat qui irure cupidatat incididunt
-          incididunt enim magna id est qui sunt fugiat. Laboris do duis pariatur
-          fugiat Lorem aute sit ullamco. Qui deserunt non reprehenderit dolore
-          nisi velit exercitation Lorem qui do enim culpa. Aliqua eiusmod in
-          occaecat reprehenderit laborum nostrud fugiat voluptate do Lorem culpa
-          officia sint labore. Tempor consectetur excepteur ut fugiat veniam
-          commodo et labore dolore commodo pariatur.
+          A criptografia existe há milênios. Um dos registros mais antigos é a{" "}
+          <strong>escítala espartana</strong>, um bastão usado por soldados da
+          Grécia Antiga para ocultar mensagens. Já no Egito, há registros de
+          hieróglifos usados como códigos.
         </p>
         <p>
-          Dolor minim irure ut Lorem proident. Ipsum do pariatur est ad ad
-          veniam in commodo id reprehenderit adipisicing. Proident duis
-          exercitation ad quis ex cupidatat cupidatat occaecat adipisicing.
-        </p>
-        <p>
-          Tempor quis dolor veniam quis dolor. Sit reprehenderit eiusmod
-          reprehenderit deserunt amet laborum consequat adipisicing officia qui
-          irure id sint adipisicing. Adipisicing fugiat aliqua nulla nostrud.
-          Amet culpa officia aliquip deserunt veniam deserunt officia
-          adipisicing aliquip proident officia sunt.
+          O famoso imperador <strong>Júlio César</strong> também deixou sua
+          marca com o "Cifra de César", onde letras eram deslocadas no alfabeto
+          para esconder o verdadeiro conteúdo de uma mensagem.
         </p>
       </>
     ),
-    badge: "React",
-    image:
-      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    title: "Lorem Ipsum Dolor Sit Amet",
+    title: "Criptografia na Idade Média",
+    badge: "Mundo Árabe e Europa",
+    image:
+      "https://media.kasperskydaily.com/wp-content/uploads/sites/94/2015/09/06135343/vigenere-cipher-2.png",
     description: (
       <>
         <p>
-          Ex irure dolore veniam ex velit non aute nisi labore ipsum occaecat
-          deserunt cupidatat aute. Enim cillum dolor et nulla sunt exercitation
-          non voluptate qui aliquip esse tempor. Ullamco ut sunt consectetur
-          sint qui qui do do qui do. Labore laborum culpa magna reprehenderit ea
-          velit id esse adipisicing deserunt amet dolore. Ipsum occaecat veniam
-          commodo proident aliqua id ad deserunt dolor aliquip duis veniam sunt.
+          Na Idade Média, a criptografia evoluiu. O matemático árabe{" "}
+          <strong>Al-Kindi</strong> desenvolveu o método de{" "}
+          <em>análise de frequência</em> — base da criptoanálise, usado para
+          quebrar códigos.
         </p>
         <p>
-          In dolore veniam excepteur eu est et sunt velit. Ipsum sint esse
-          veniam fugiat esse qui sint ad sunt reprehenderit do qui proident
-          reprehenderit. Laborum exercitation aliqua reprehenderit ea sint
-          cillum ut mollit.
+          Mais tarde, na Europa renascentista, surgiu a{" "}
+          <strong>Cifra de Vigenère</strong>, que utilizava várias letras como
+          chave e era considerada "inquebrável" por séculos.
         </p>
       </>
     ),
-    badge: "Changelog",
-    image:
-      "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    title: "Lorem Ipsum Dolor Sit Amet",
+    title: "A era moderna da criptografia",
+    badge: "Século XX",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/2/27/Enigma-plugboard.jpg",
     description: (
       <>
         <p>
-          Ex irure dolore veniam ex velit non aute nisi labore ipsum occaecat
-          deserunt cupidatat aute. Enim cillum dolor et nulla sunt exercitation
-          non voluptate qui aliquip esse tempor. Ullamco ut sunt consectetur
-          sint qui qui do do qui do. Labore laborum culpa magna reprehenderit ea
-          velit id esse adipisicing deserunt amet dolore. Ipsum occaecat veniam
-          commodo proident aliqua id ad deserunt dolor aliquip duis veniam sunt.
+          Durante a Segunda Guerra Mundial, a criptografia foi essencial. A
+          máquina <strong>Enigma</strong>, usada pelos nazistas, foi decifrada
+          por Alan Turing e sua equipe — um marco que ajudou a encurtar a guerra
+          e impulsionou a computação moderna.
+        </p>
+        <p>
+          Após a guerra, a criptografia começou a ser usada também em tempos de
+          paz, principalmente por governos e grandes empresas.
         </p>
       </>
     ),
-    badge: "Launch Week",
+  },
+  {
+    title: "A revolução digital",
+    badge: "Criptografia moderna",
     image:
-      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&q=80&w=3506&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://invoice.com.br/wp-content/uploads/2024/05/240_F_702737528_gJGxSWIWILLUQOOyY3RpVDoEMmkter0A.jpg",
+    description: (
+      <>
+        <p>
+          Com o avanço da internet, a criptografia tornou-se uma parte
+          fundamental da vida digital. Surgiram algoritmos como o{" "}
+          <strong>RSA</strong> e o <strong>AES</strong>, usados para proteger
+          dados em transações bancárias, e-mails e redes sociais.
+        </p>
+        <p>
+          Hoje, navegamos por sites seguros (HTTPS), trocamos mensagens
+          criptografadas e assinamos documentos digitais — tudo graças à
+          criptografia moderna.
+        </p>
+      </>
+    ),
+  },
+  {
+    title: "Criptografia no futuro",
+    badge: "Tendências",
+    image:
+      "https://itshow.com.br/wp-content/uploads/2025/02/portalitshow_A_futuristic_cybersecurity_design_featuring_a_gl_fef22de1-59b7-47c0-a30e-dc67906aecd4_1.png",
+    description: (
+      <>
+        <p>
+          Com a chegada dos computadores quânticos, os sistemas atuais de
+          criptografia poderão ser quebrados em segundos. Isso está motivando o
+          desenvolvimento da <strong>criptografia pós-quântica</strong>, pensada
+          para resistir a essa nova era computacional.
+        </p>
+        <p>
+          O futuro da segurança digital dependerá de algoritmos mais avançados,
+          rápidos e confiáveis — e a criptografia continuará no centro dessa
+          evolução.
+        </p>
+      </>
+    ),
   },
 ];

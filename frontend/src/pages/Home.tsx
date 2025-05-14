@@ -1,8 +1,8 @@
 "use client";
 
-import HomeTitle from "../components/HomeTitle";
-import CanvasRevealHome from "../components/CanvasRevealHome";
-import { TabsHome } from "@/components/TabsHome";
+import HomeTitle from "../components/layouts/HomeTitle";
+import CanvasRevealHome from "../components/layouts/CanvasRevealHome";
+import { TabsHome } from "@/components/layouts/TabsHome";
 
 export default function App() {
   return (
