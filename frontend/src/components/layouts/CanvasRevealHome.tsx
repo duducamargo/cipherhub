@@ -5,38 +5,57 @@ import { AnimatePresence, motion } from "motion/react";
 
 export default function CanvasRevealHome() {
   return (
-    <div className="py-20 flex flex-col lg:flex-row items-center justify-center bg-[#111] text-white w-full gap-12 md:gap-4 mx-auto px-8">
-      <Card title="Criptografia Base 64" icon={<AceternityIcon />}>
-        <CanvasRevealEffect
-          animationSpeed={5.1}
-          containerClassName="bg-green-600 cursor-pointer"
-        />
-      </Card>
-      <Card title="Criptografia SHA-256" icon={<AceternityIcon />}>
-        <CanvasRevealEffect
-          animationSpeed={5.1}
-          containerClassName="bg-red-800 cursor-pointer"
-          colors={[[255, 0, 0]]}
-        />
-      </Card>
+    <>
+      <h2 className=" mt-20 text-center text-2xl md:text-4xl font-bold text-white tracking-tight mb-12">
+        Explore os{" "}
+        <span className="bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 text-transparent bg-clip-text">
+          Algoritmos de Criptografia
+        </span>
+      </h2>
 
-      <Card title="Criptografia RSA" icon={<AceternityIcon />}>
-        <CanvasRevealEffect
-          animationSpeed={3}
-          containerClassName="bg-sky-600 cursor-pointer"
-          colors={[[125, 211, 252]]}
-        />
-      </Card>
-    </div>
+      <div className="pb-20 mt-10 flex flex-col lg:flex-row items-center justify-center bg-[#111] text-white w-full gap-12 md:gap-4 mx-auto px-8">
+        <Card
+          onClick="/base64"
+          title="Criptografia Base 64"
+          icon={<AceternityIcon />}
+        >
+          <CanvasRevealEffect
+            animationSpeed={5.1}
+            containerClassName="bg-green-600 cursor-pointer"
+          />
+        </Card>
+        <Card
+          onClick="/sha256"
+          title="Criptografia SHA-256"
+          icon={<AceternityIcon />}
+        >
+          <CanvasRevealEffect
+            animationSpeed={5.1}
+            containerClassName="bg-red-800 cursor-pointer"
+            colors={[[255, 0, 0]]}
+          />
+        </Card>
+
+        <Card onClick="/rsa" title="Criptografia RSA" icon={<AceternityIcon />}>
+          <CanvasRevealEffect
+            animationSpeed={3}
+            containerClassName="bg-sky-600 cursor-pointer"
+            colors={[[125, 211, 252]]}
+          />
+        </Card>
+      </div>
+    </>
   );
 }
 const Card = ({
   title,
   icon,
+  onClick,
   children,
 }: {
   title: string;
   icon: React.ReactNode;
+  onClick?: string;
   children?: React.ReactNode;
 }) => {
   const [hovered, setHovered] = React.useState(false);
@@ -44,6 +63,11 @@ const Card = ({
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={() => {
+        if (typeof window !== "undefined") {
+          window.location.href = `${onClick}`;
+        }
+      }}
       className="border border-white/[0.2] group/canvas-card flex items-center justify-center dark:border-white/[0.2]  max-w-sm w-full mx-auto p-4 relative h-[30rem] relative"
     >
       <Icon className="absolute h-6 w-6 -top-3 -left-3 text-white" />
@@ -112,4 +136,4 @@ export const Icon = ({ className, ...rest }: any) => {
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
     </svg>
   );
-}
+};
