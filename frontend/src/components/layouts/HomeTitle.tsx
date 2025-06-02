@@ -1,4 +1,4 @@
-import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
+import { BackgroundBeamsWithCollision } from "../ui/background-beams-with-collision";
 
 
 export default function HomeTitle() {
