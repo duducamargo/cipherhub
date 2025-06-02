@@ -1,22 +1,47 @@
 "use client";
 
 import { useState } from "react";
+import axios from "axios";
+import { HyperText } from "@/components/ui/hyper-text";
 
 export default function Base64() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [mode, setMode] = useState("encode");
 
-  const handleProcess = () => {
-    try {
-      const result =
-        mode === "encode"
-          ? btoa(unescape(encodeURIComponent(input)))
-          : decodeURIComponent(escape(atob(input)));
-      setOutput(result);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {
-      setOutput("Erro ao processar. Verifique se o texto está correto.");
+  const handleProcess = async () => {
+    if (mode === "encode") {
+      try {
+        const response = await axios.post(
+          "http://localhost:3001/base64/encode",
+          {
+            text: input,
+          }
+        );
+
+        console.log("Resposta da API:", response.data.result);
+        setOutput(response.data.result);
+      } catch (error) {
+        console.error("Erro ao processar:", error);
+        setOutput("Erro ao se comunicar com a API.");
+      }
+    } else if (mode === "decode") {
+      try {
+        const response = await axios.post(
+          "http://localhost:3001/base64/decode",
+          {
+            text: input,
+          }
+        );
+
+        console.log("Resposta da API:", response.data.result);
+        setOutput(response.data.result);
+      } catch (error) {
+        console.error("Erro ao processar:", error);
+        setOutput("Erro ao se comunicar com a API.");
+      }
+    } else {
+      setOutput("Modo inválido. Selecione codificar ou decodificar.");
     }
   };
 
@@ -70,13 +95,23 @@ export default function Base64() {
         </div>
 
         {/* Resultado */}
-        <div className="flex-1 bg-neutral-900 p-4 rounded-lg shadow-lg">
+        <div className="flex-1 bg-neutral-900 p-4 rounded-lg shadow-lg md:max-w-[479px]">
           <label className="block text-sm font-semibold mb-2">Resultado:</label>
-          <textarea
-            className="w-full h-48 p-3 rounded bg-neutral-800 text-white resize-none outline-none"
-            value={output}
-            readOnly
-          ></textarea>
+          <div className="w-full max-w-[479px] h-48 p-3 rounded bg-neutral-800 text-white overflow-auto">
+            {output ? (
+              <HyperText
+                className="max-w-[479px] break-words"
+                startOnView={true}
+                animateOnHover={true}
+              >
+                {output}
+              </HyperText>
+            ) : (
+              <p className="text-neutral-500">
+                O resultado será exibido aqui...
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </div>
