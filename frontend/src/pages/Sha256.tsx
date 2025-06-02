@@ -65,6 +65,7 @@ export default function Sha256() {
                 className="max-w-[479px] break-words"
                 startOnView={true}
                 animateOnHover={true}
+                duration={1000}
                 characterSet={"0123456789abcdef".split("")}
               >
                 {output}
