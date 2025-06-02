@@ -12,3 +12,19 @@ Content-Type: application/json
 {
   "text": "mensagem de teste"
 }
+
+###
+POST http://localhost:3001/base64/encode
+Content-Type: application/json
+
+{
+  "text": "mensagem de teste"
+}
+
+###
+POST http://localhost:3001/base64/decode
+Content-Type: application/json
+
+{
+  "text": "bWVuc2FnZW0gc2VjcmV0YQ=="
+}

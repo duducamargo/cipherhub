@@ -21,7 +21,7 @@ app.post("/sha256", (req, res) => {
 
 app.post("/base64/encode", (req, res) => {
   const { text } = req.body;
-  exec(`"${base64Path}" "${text} 1"`, (err, stdout, stderr) => {
+  exec(`"${base64Path}" 1 "${text}"`, (err, stdout, stderr) => {
     if (err) return res.status(500).json({ error: stderr });
     res.json({ result: stdout.trim() });
   });
@@ -29,7 +29,7 @@ app.post("/base64/encode", (req, res) => {
 
 app.post("/base64/decode", (req, res) => {
   const { text } = req.body;
-  exec(`"${base64Path}" "${text} 2"`, (err, stdout, stderr) => {
+  exec(`"${base64Path}" 2 "${text}"`, (err, stdout, stderr) => {
     if (err) return res.status(500).json({ error: stderr });
     res.json({ result: stdout.trim() });
   });
