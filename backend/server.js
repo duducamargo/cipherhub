@@ -27,5 +27,5 @@ app.post("/rsa", (req, res) => {
 });
 
 app.listen(3001, () => {
-  console.log("✅ API pronta em http://localhost:3001");
+  console.log("API pronta em http://localhost:3001");
 });

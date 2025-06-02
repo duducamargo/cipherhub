@@ -1,0 +1,56 @@
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@react-three/fiber": "^9.0.0-alpha.8",
+    "@tabler/icons-react": "^3.31.0",
+    "@tailwindcss/vite": "^4.1.5",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.15.0",
+    "lucide-react": "^0.509.0",
+    "motion": "^12.10.5",
+    "next": "15.0.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^7.6.0",
+    "tailwind-merge": "^3.2.0",
+    "three": "^0.176.0"
+  },
+  "overrides": {
+    "framer-motion": {
+      "react": "19.0.0-rc-66855b96-20241106",
+      "react-dom": "19.0.0-rc-66855b96-20241106"
+    }
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.25.0",
+    "@rollup/plugin-alias": "^5.1.1",
+    "@types/node": "^22.15.17",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@types/three": "^0.176.0",
+    "@vitejs/plugin-react": "^4.4.1",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.25.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^16.0.0",
+    "or": "^0.2.0",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.5",
+    "tw-animate-css": "^1.2.9",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.30.1",
+    "vite": "^6.3.5"
+  }
+}

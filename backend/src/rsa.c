@@ -1,70 +1,67 @@
 #include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdint.h>
 
-typedef uint64_t ull;
+typedef __uint128_t uint128_t;
+typedef __int128_t int128_t;
 
-// Função para calcular o MDC (máximo divisor comum)
-ull gcd(ull a, ull b)
-{
-    while (b != 0)
-    {
-        ull temp = b;
+void print_uint128(uint128_t n) {
+    if (n == 0) {
+        printf("0");
+        return;
+    }
+    char buffer[64] = {0};
+    int i = 62;
+    while (n > 0 && i >= 0) {
+        buffer[i--] = '0' + (n % 10);
+        n /= 10;
+    }
+    printf("%s", &buffer[i + 1]);
+}
+
+uint128_t gcd(uint128_t a, uint128_t b) {
+    while (b != 0) {
+        uint128_t temp = b;
         b = a % b;
         a = temp;
     }
     return a;
 }
 
-// Algoritmo de Euclides estendido para obter inverso modular
-ull modinv(ull e, ull phi)
-{
-    int64_t t = 0, newt = 1;
-    int64_t r = (int64_t)phi, newr = (int64_t)e;
+uint128_t modinv(uint128_t e, uint128_t phi) {
+    int128_t t = 0, newt = 1;
+    int128_t r = phi, newr = e;
 
-    while (newr != 0)
-    {
-        int64_t q = r / newr;
+    while (newr != 0) {
+        int128_t q = r / newr;
+        int128_t temp = newt;
+        newt = t - q * newt;
+        t = temp;
 
-        int64_t temp = t;
-        t = newt;
-        newt = temp - q * newt;
-
-        temp = r;
-        r = newr;
-        newr = temp - q * newr;
+        temp = newr;
+        newr = r - q * newr;
+        r = temp;
     }
 
-    if (r > 1)
-        return 0; // sem inverso
-
-    if (t < 0)
-        t += phi;
-
-    return (ull)t;
+    if (r > 1) return 0;
+    if (t < 0) t += phi;
+    return (uint128_t)t;
 }
 
-// Exponenciação modular eficiente
-ull mod_exp(ull base, ull exp, ull mod)
-{
-    ull result = 1;
-    base = base % mod;
-
-    while (exp > 0)
-    {
-        if (exp % 2 == 1)
-            result = (result * base) % mod;
-        exp = exp >> 1;
+uint128_t mod_exp(uint128_t base, uint128_t exp, uint128_t mod) {
+    uint128_t result = 1;
+    base %= mod;
+    while (exp > 0) {
+        if (exp & 1) result = (result * base) % mod;
+        exp >>= 1;
         base = (base * base) % mod;
     }
     return result;
 }
 
-int main(int argc, char *argv[])
-{
-    if (argc != 2)
-    {
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
         fprintf(stderr, "Uso: %s <mensagem>\n", argv[0]);
         return 1;
     }
@@ -72,55 +69,46 @@ int main(int argc, char *argv[])
     const char *input_msg = argv[1];
     char mensagem[256];
     size_t input_len = strlen(input_msg);
-
     if (input_len >= sizeof(mensagem) - 1)
         input_len = sizeof(mensagem) - 1;
 
     memcpy(mensagem, input_msg, input_len);
     mensagem[input_len] = '\0';
 
-    // RSA com primos pequenos (apenas 1 caractere por bloco)
-    ull p = 61;
-    ull q = 59;
-    ull n = p * q; // 3599
-    ull phi = (p - 1) * (q - 1);
-    ull e = 17;
-    ull d = modinv(e, phi);
+    uint128_t p = 10000019;
+    uint128_t q = 10000079;
+    uint128_t n = p * q;
+    uint128_t phi = (p - 1) * (q - 1);
+    uint128_t e = 65537;
+    uint128_t d = modinv(e, phi);
 
-
-    if (d == 0 || gcd(e, phi) != 1)
-    {
+    if (d == 0 || gcd(e, phi) != 1) {
         fprintf(stderr, "Erro ao gerar chaves RSA\n");
         return 1;
     }
 
     int blocos = (int)strlen(mensagem);
-    ull criptografada[256];
+    uint128_t criptografada[256];
     unsigned char decodificada[256];
     int pos = 0;
 
     printf("{\n  \"encrypt\": [");
-
-    for (int i = 0; i < blocos; i++)
-    {
-        ull bloco = (unsigned char)mensagem[i];
-
+    for (int i = 0; i < blocos; i++) {
+        uint128_t bloco = (unsigned char)mensagem[i];
         criptografada[i] = mod_exp(bloco, e, n);
-        printf("%llu", criptografada[i]);
+        print_uint128(criptografada[i]);
         if (i < blocos - 1)
             printf(", ");
     }
 
     printf("],\n  \"decrypt\": \"");
 
-    for (int i = 0; i < blocos; i++)
-    {
-        ull bloco = mod_exp(criptografada[i], d, n);
+    for (int i = 0; i < blocos; i++) {
+        uint128_t bloco = mod_exp(criptografada[i], d, n);
         decodificada[pos++] = (unsigned char)bloco;
     }
 
     decodificada[pos] = '\0';
     printf("%s\"\n}\n", (char *)decodificada);
-
     return 0;
 }
