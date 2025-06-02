@@ -1,61 +1,71 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function Sha256() {
-  const [inputText, setInputText] = useState("");
-  const [hashResult, setHashResult] = useState("");
+  const [input, setInput] = useState("");
+  const [output, setOutput] = useState("");
+  const [mode, setMode] = useState("encode");
 
-  const handleHash = async () => {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(inputText);
-
-    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray
-      .map((b) => b.toString(16).padStart(2, "0"))
-      .join("");
-
-    setHashResult(hashHex);
+  const handleProcess = () => {
+    try {
+      const result = decodeURIComponent(escape(atob(input)));
+      setOutput(result);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
+      setOutput("Erro ao processar. Verifique se o texto está correto.");
+    }
   };
 
   return (
-    <main className="min-h-screen bg-[#111] text-white py-16 px-4 md:px-12 flex flex-col items-center">
-      <h1 className="text-3xl md:text-4xl font-bold mb-10 text-center">
-        Teste de Criptografia SHA-256
+    <div className="min-h-screen bg-[#111] text-white px-4 py-8 flex flex-col items-center">
+      <h1 className="text-3xl mt-20 md:text-4xl font-bold mb-8 bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 text-transparent bg-clip-text">
+        Conversor Sha-256
       </h1>
 
-      <div className="grid md:grid-cols-2 gap-8 w-full max-w-6xl">
+      <div className="flex gap-6 flex-col md:flex-row w-full max-w-5xl">
         {/* Entrada */}
-        <div className="flex flex-col bg-[#1a1a1a] p-6 rounded-2xl border border-neutral-700 shadow-md">
-          <label className="text-lg font-medium mb-2">Texto de entrada</label>
+        <div className="flex-1 bg-neutral-900 p-4 rounded-lg shadow-lg">
+          <label className="block text-sm font-semibold mb-2">
+            Texto de entrada:
+          </label>
           <textarea
-            className="w-full h-48 p-4 bg-[#0f0f0f] text-white rounded-xl border border-neutral-700 resize-none focus:outline-none focus:ring-0"
-            placeholder="Digite o texto para gerar o hash SHA-256..."
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-          />
+            className="w-full h-48 p-3 rounded bg-neutral-800 text-white resize-none outline-none"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Digite o texto aqui..."
+          ></textarea>
 
-          <button
-            onClick={handleHash}
-            className="mt-4 px-6 py-3 bg-purple-600 hover:bg-purple-700 transition rounded-lg font-semibold"
-          >
-            Gerar SHA-256
-          </button>
+          <div className="flex gap-4 mt-4">
+            <button
+              className={`px-4 py-2 rounded font-medium transition-colors duration-200 ${
+                mode === "encode"
+                  ? "bg-purple-600 text-white"
+                  : "bg-neutral-700 text-neutral-300 hover:bg-neutral-600"
+              }`}
+              onClick={() => setMode("encode")}
+            >
+              Codificar
+            </button>
+            <button
+              className="ml-auto px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600"
+              onClick={handleProcess}
+            >
+              Processar
+            </button>
+          </div>
         </div>
 
         {/* Resultado */}
-        <div className="flex flex-col bg-[#1a1a1a] p-6 rounded-2xl border border-neutral-700 shadow-md">
-          <label className="text-lg font-medium mb-2">
-            Resultado (SHA-256)
-          </label>
+        <div className="flex-1 bg-neutral-900 p-4 rounded-lg shadow-lg">
+          <label className="block text-sm font-semibold mb-2">Resultado:</label>
           <textarea
-            className="w-full h-48 p-4 bg-[#0f0f0f] text-green-400 rounded-xl border border-neutral-700 resize-none"
+            className="w-full h-48 p-3 rounded bg-neutral-800 text-white resize-none outline-none"
+            value={output}
             readOnly
-            value={hashResult}
-          />
+          ></textarea>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
