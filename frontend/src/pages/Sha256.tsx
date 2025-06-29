@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { HyperText } from "@/components/ui/hyper-text";
 import { DetailsCard } from "@/components/DetailsCard";
-import CodeSha256 from "@/components/CodeSha256";
+import CodeSha256 from "@/components/CodeRSA";
 
 export default function Sha256() {
   const [input, setInput] = useState("");

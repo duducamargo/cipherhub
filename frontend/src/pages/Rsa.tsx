@@ -1,5 +1,6 @@
 "use client";
 
+import CodeRSA from "@/components/CodeRSA";
 import { DetailsCard } from "@/components/DetailsCard";
 import { useState } from "react";
 
@@ -45,7 +46,7 @@ export default function Rsa() {
         securityLevel={4}
       />
 
-      <div className="flex gap-6 flex-col md:flex-row w-full max-w-5xl">
+      <div className="flex gap-6 flex-col md:flex-row w-full max-w-5xl mb-12">
         {/* Entrada */}
         <div className="flex-1 bg-neutral-900 p-4 rounded-lg shadow-lg">
           <label className="block text-sm font-semibold mb-2">
@@ -139,6 +140,8 @@ export default function Rsa() {
           ></textarea>
         </div>
       </div>
+
+      <CodeRSA />
     </div>
   );
 }
