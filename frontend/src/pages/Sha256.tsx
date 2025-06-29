@@ -3,6 +3,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { HyperText } from "@/components/ui/hyper-text";
+import { DetailsCard } from "@/components/DetailsCard";
 
 export default function Sha256() {
   const [input, setInput] = useState("");
@@ -24,13 +25,23 @@ export default function Sha256() {
 
   return (
     <div className="min-h-screen bg-[#111] text-white px-4 py-8 flex flex-col items-center">
-      <h1 className="text-3xl mt-20 md:text-4xl font-bold mb-8 bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 text-transparent bg-clip-text">
+      <h1 className="text-3xl mt-20 md:text-4xl font-bold mb-12 bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 text-transparent bg-clip-text">
         Conversor Sha-256
       </h1>
 
+      <DetailsCard
+        algorithmName="SHA-256"
+        algorithmType="Hash criptográfico (One-way)"
+        structure="Função de dispersão baseada em operações lógicas, rotação e adição modular"
+        isReversible={false}
+        implementationDifficulty="Baixa com bibliotecas prontas, Alta para implementação do zero"
+        commonUses="Assinaturas digitais, blockchain, verificação de integridade"
+        securityLevel={5}
+      />
+
       <div className="flex gap-6 flex-col md:flex-row w-full max-w-5xl">
         {/* Entrada */}
-        <div className="flex-1 bg-neutral-900 p-4 rounded-lg shadow-lg md:max-w-[479px]">
+        <div className="flex-1 bg-neutral-900 p-4 rounded-lg shadow-lg">
           <label className="block text-sm font-semibold mb-2">
             Texto de entrada:
           </label>
