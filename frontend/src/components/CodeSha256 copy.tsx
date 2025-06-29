@@ -123,7 +123,7 @@ void print_binary(const uint8_t *data, size_t len)
         }
         printf(" ");
         if ((i + 1) % 8 == 0)
-            printf("\n"); // Quebra linha a cada 8 bytes
+            printf("\\n"); // Quebra linha a cada 8 bytes
     }
 }
 
@@ -189,7 +189,7 @@ void print_final_hash(uint32_t H[8])
     {
         printf("%08x", H[i]);
     }
-    printf("\n");
+    printf("\\n");
 }
 
 void get_hash_bytes(uint32_t H[8], uint8_t hash_out[32])
@@ -234,15 +234,15 @@ int parse_hex_string(const char *hex, uint8_t *output, size_t output_len)
 int menu()
 {
     int opcao;
-    printf("\n=== MENU SHA-256 ===\n");
-    printf("1. Gerar hash de um arquivo\n");
-    printf("2. Gerar hash de um texto\n");
-    printf("3. Comparar hash de um arquivo com uma hash fornecida\n");
-    printf("4. Comparar dois arquivos\n");
-    printf("0. Sair\n");
+    printf("\\n=== MENU SHA-256 ===\\n");
+    printf("1. Gerar hash de um arquivo\\n");
+    printf("2. Gerar hash de um texto\\n");
+    printf("3. Comparar hash de um arquivo com uma hash fornecida\\n");
+    printf("4. Comparar dois arquivos\\n");
+    printf("0. Sair\\n");
     printf("Escolha uma opcao: ");
     scanf("%d", &opcao);
-    getchar(); // limpa o \n do buffer
+    getchar(); // limpa o \\n do buffer
     return opcao;
 }
 
@@ -290,14 +290,14 @@ void print_hash(uint8_t hash[32])
     {
         printf("%02x", hash[i]);
     }
-    printf("\n");
+    printf("\\n");
 }
 
 int main(int argc, char *argv[])
 {
     if (argc != 2)
     {
-        fprintf(stderr, "Uso: %s \\"mensagem\\"\n", argv[0]);
+        fprintf(stderr, "Uso: %s \\"mensagem\\"\\n", argv[0]);
         return 1;
     }
 

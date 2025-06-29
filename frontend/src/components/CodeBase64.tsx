@@ -12,8 +12,8 @@ const char BASE64_TABLE[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy
 // Função que converte texto em sua representação binária (ainda presente para manter a estrutura original, mas não utilizada)
 void text_to_binary(const char *text, char *binary)
 {
-    binary[0] = '\0';
-    for (int i = 0; text[i] != '\0'; i++)
+    binary[0] = '\\0';
+    for (int i = 0; text[i] != '\\0'; i++)
     {
         char buffer[9];
         snprintf(buffer, sizeof(buffer), "%08b", (unsigned char)text[i]);
@@ -55,14 +55,14 @@ void binary_to_base64(const char *binary, char *base64)
         base64[base64_index++] = '=';
     }
 
-    base64[base64_index] = '\0';
+    base64[base64_index] = '\\0';
 }
 
 // Função que converte uma string Base64 para binário (mantida por legado, mas não utilizada)
 void base64_to_binary(const char *base64, char *binary)
 {
-    binary[0] = '\0';
-    for (int i = 0; base64[i] != '\0'; i++)
+    binary[0] = '\\0';
+    for (int i = 0; base64[i] != '\\0'; i++)
     {
         if (base64[i] == '=')
         {
@@ -71,7 +71,7 @@ void base64_to_binary(const char *base64, char *binary)
         char *ptr = strchr(BASE64_TABLE, base64[i]);
         if (ptr == NULL)
         {
-            printf("Caractere inválido em Base64: %c\n", base64[i]);
+            printf("Caractere inválido em Base64: %c\\n", base64[i]);
             exit(1);
         }
         int index = ptr - BASE64_TABLE;
@@ -91,14 +91,13 @@ void binary_to_text(const char *binary, char *text)
     {
         char byte_str[9];
         strncpy(byte_str, &binary[i], 8);
-        byte_str[8] = '\0';
+        byte_str[8] = '\\0';
         unsigned char byte = (unsigned char)strtol(byte_str, NULL, 2);
         text[text_index++] = byte;
     }
-    text[text_index] = '\0';
+    text[text_index] = '\\0';
 }
 
-// NOVA Função de codificação Base64 direta (corrigida)
 void encode_base64(const unsigned char *input, char *output)
 {
     int i = 0, j = 0;
@@ -118,7 +117,7 @@ void encode_base64(const unsigned char *input, char *output)
         output[j++] = (i > len) ? '=' : BASE64_TABLE[triple & 0x3F];
     }
 
-    output[j] = '\0';
+    output[j] = '\\0';
 }
 
 void decode_base64(const char *input, char *output)
@@ -155,7 +154,7 @@ void decode_base64(const char *input, char *output)
             output[j++] = buffer & 0xFF;
     }
 
-    output[j] = '\0';
+    output[j] = '\\0';
 }
 
 // Função principal do programa
@@ -166,7 +165,7 @@ int main(int argc, char *argv[])
 
     if (argc < 3)
     {
-        fprintf(stderr, "Uso: %s <modo> <entrada>\nModo: 1=encode, 2=decode\n", argv[0]);
+        fprintf(stderr, "Uso: %s <modo> <entrada>\\nModo: 1=encode, 2=decode\\n", argv[0]);
         return 1;
     }
 
@@ -184,12 +183,12 @@ int main(int argc, char *argv[])
     if (option == 1)
     {
         encode_base64((unsigned char *)input, output);
-        printf("%s\n", output);
+        printf("%s\\n", output);
     }
     else if (option == 2)
     {
         decode_base64(input, output);
-        printf("%s\n", output);
+        printf("%s\\n", output);
     }
     else
     {
