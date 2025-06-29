@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { HyperText } from "@/components/ui/hyper-text";
 import { DetailsCard } from "@/components/DetailsCard";
+import CodeBase64 from "@/components/CodeBase64";
 
 export default function Base64() {
   const [input, setInput] = useState("");
@@ -62,7 +63,7 @@ export default function Base64() {
         securityLevel={2}
       />
 
-      <div className="flex gap-6 flex-col md:flex-row w-full max-w-5xl">
+      <div className="flex gap-6 flex-col md:flex-row w-full max-w-5xl mb-12">
         {/* Entrada */}
         <div className="flex-1 bg-neutral-900 p-4 rounded-lg shadow-lg">
           <label className="block text-sm font-semibold mb-2">
@@ -125,6 +126,8 @@ export default function Base64() {
           </div>
         </div>
       </div>
+
+      <CodeBase64 />
     </div>
   );
 }
