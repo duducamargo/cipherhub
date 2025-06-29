@@ -28,7 +28,7 @@ export const DetailsCard: React.FC<DetailsCardProps> = ({
   securityLevel,
 }) => {
   return (
-    <div className="w-full max-w-6xl mx-auto mb-10 px-8 py-8 rounded-3xl bg-neutral-900 border border-neutral-800 shadow-2xl">
+    <div className="w-full max-w-5xl mx-auto mb-10 px-8 py-8 rounded-3xl bg-neutral-900 border border-neutral-800 shadow-2xl">
       <h2 className="text-3xl font-bold text-white mb-8 tracking-tight flex items-center gap-2">
         🔍 Detalhes do Algoritmo
       </h2>

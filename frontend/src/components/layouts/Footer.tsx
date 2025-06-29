@@ -37,8 +37,8 @@ export default function Footer() {
             </a>
           </li>
           <li>
-            <a href="/sobre" className="hover:text-white">
-              Sobre
+            <a href="/base64" className="hover:text-white">
+              Base 64
             </a>
           </li>
         </ul>

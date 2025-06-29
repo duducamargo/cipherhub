@@ -76,8 +76,8 @@ export default function Navbar() {
               </a>
             </li>
             <li>
-              <a href="/sobre" className="hover:text-white transition">
-                Sobre
+              <a href="/base64" className="hover:text-white transition">
+                Base 64
               </a>
             </li>
           </ul>
@@ -135,10 +135,10 @@ export default function Navbar() {
               RSA
             </a>
             <a
-              href="/sobre"
+              href="/base64"
               className="hover:text-purple-400 transition duration-200 ease-in-out"
             >
-              Sobre
+              Base 64
             </a>
           </div>
         </aside>

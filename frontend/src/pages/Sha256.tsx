@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { HyperText } from "@/components/ui/hyper-text";
 import { DetailsCard } from "@/components/DetailsCard";
+import CodeSha256 from "@/components/CodeSha256";
 
 export default function Sha256() {
   const [input, setInput] = useState("");
@@ -39,7 +40,7 @@ export default function Sha256() {
         securityLevel={5}
       />
 
-      <div className="flex gap-6 flex-col md:flex-row w-full max-w-5xl">
+      <div className="flex gap-6 flex-col md:flex-row w-full max-w-5xl mb-12">
         {/* Entrada */}
         <div className="flex-1 bg-neutral-900 p-4 rounded-lg shadow-lg">
           <label className="block text-sm font-semibold mb-2">
@@ -52,14 +53,14 @@ export default function Sha256() {
             placeholder="Digite o texto aqui..."
           ></textarea>
 
-          <div className="flex gap-4 mt-4">
+          <div className="flex flex-col sm:flex-row gap-4 mt-4">
             <button
               className={`px-4 py-2 rounded font-medium transition-colors duration-200 bg-purple-600 text-white cursor-pointer hover:bg-purple-700 outline-none`}
             >
               Codificar
             </button>
             <button
-              className="ml-auto px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 cursor-pointer outline-none"
+              className="sm:ml-auto px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 cursor-pointer outline-none"
               onClick={handleProcess}
             >
               Processar
@@ -75,7 +76,7 @@ export default function Sha256() {
               <HyperText
                 className="max-w-[479px] break-words"
                 startOnView={true}
-                animateOnHover={true}
+                animateOnHover={false}
                 duration={1000}
                 characterSet={"0123456789abcdef".split("")}
               >
@@ -89,6 +90,9 @@ export default function Sha256() {
           </div>
         </div>
       </div>
+
+       <CodeSha256 />
+
     </div>
   );
 }

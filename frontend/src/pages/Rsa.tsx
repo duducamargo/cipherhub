@@ -99,7 +99,7 @@ export default function Rsa() {
             )}
           </div>
 
-          <div className="flex gap-4 mt-4">
+          <div className="flex flex-col sm:flex-row gap-4 mt-4">
             <button
               className={`px-4 py-2 rounded font-medium transition-colors duration-200 ${
                 mode === "encrypt"
@@ -121,7 +121,7 @@ export default function Rsa() {
               Descriptografar
             </button>
             <button
-              className="ml-auto px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600"
+              className="sm:ml-auto px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600"
               onClick={handleProcess}
             >
               Processar
