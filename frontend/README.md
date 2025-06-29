@@ -1,54 +1,84 @@
-# React + TypeScript + Vite
+# 🔐 CipherHub — Learn Cryptography Visually
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to **CipherHub**, a modern, interactive platform built to **demystify cryptography** through educational explanations, interactive tabs, and real code examples. Whether you're a student, developer, or security enthusiast, CipherHub makes it easier to **understand and visualize how cryptographic algorithms work**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- 📚 **Detailed Educational Tabs** — Organized content explaining the history, concepts, and applications of cryptography.
+- 🧠 **Interactive Code Blocks** — With syntax highlighting, line numbers, and copy-to-clipboard functionality.
+- 🔍 **Live Demonstrations** — See how algorithms like SHA-256, RSA, and Base64 encoding actually behave with real inputs.
+- 📊 **Detail Cards** — Algorithm characteristics, such as output size, key usage, and performance, presented clearly.
+- 🎨 **Modern UI** — Smooth animations, elegant typography, and responsive design using Tailwind CSS and Framer Motion.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🔧 Technologies Used
+
+- **Frontend:** React + TypeScript + Tailwind CSS + Framer Motion
+- **Syntax Highlighting:** React Syntax Highlighter (Prism-based)
+- **UI Icons:** Tabler Icons
+- **Hosting:** Railway 
+
+---
+
+## 🧪 Algorithms Covered
+
+- ✅ SHA-256
+- ✅ RSA
+- ✅ Base64
+- 🚧 More coming soon...
+
+Each algorithm includes:
+- A rich tabbed explanation (history, definition, usage, etc.)
+- An interactive **CodeBlock** component showing real implementations
+- A **Details Card** with technical specs
+
+---
+
+## 📁 Project Structure (Simplified)
+
+```
+  /frontend
+      /public
+      /src
+          /assets
+          /components
+          /lib
+          /pages
+          - App.tsx
+          - main.tsx
+          .......
+      - components.js
+      - eslint.config.js
+      - index.html
+      .......
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🚀 Getting Started
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+git clone https://github.com/duducamargo/cipherhub.git
+cd frontend
+npm install
+npm run dev
 ```
+
+---
+
+## 📄 License
+
+MIT License. Use freely and contribute!
+
+---
+
+## 🤝 Contributing
+
+Pull requests are welcome! If you have ideas for new algorithms, UI improvements, or educational content, let’s collaborate!
+
+---
+
+Made with ❤️ for learning, security, and elegant design.

@@ -16,7 +16,6 @@ Welcome to **CipherHub**, a modern, interactive platform built to **demystify cr
 
 ## 🔧 Technologies Used
 
-- **Frontend:** React + TypeScript + Tailwind CSS + Framer Motion
 - **Backend:** Node.js + Express.js + C + Child Process
 - **Syntax Highlighting:** React Syntax Highlighter (Prism-based)
 - **UI Icons:** Tabler Icons
@@ -41,41 +40,19 @@ Each algorithm includes:
 ## 📁 Project Structure (Simplified)
 
 ```
-/cipherhub
-    /frontend
-        /public
-        /src
-            /assets
-            /components
-            /lib
-            /pages
-            - App.tsx
-            - main.tsx
-            .......
-        - components.js
-        - eslint.config.js
-        - index.html
-        .......
-    /backend
-        /files
-        /src
-            - base64.c
-            - rsa.c
-            - sha256.c
-        - server.js
-        - teste.http
+/backend
+    /files
+    /src
+        - base64.c
+        - rsa.c
+        - sha256.c
+    - server.js
+    - teste.http
 ```
 
 ---
 
 ## 🚀 Getting Started
-
-```bash
-git clone https://github.com/duducamargo/cipherhub.git
-cd frontend
-npm install
-npm run dev
-```
 
 ```bash
 git clone https://github.com/duducamargo/cipherhub.git
