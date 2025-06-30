@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { HyperText } from "@/components/ui/hyper-text";
 import { DetailsCard } from "@/components/DetailsCard";
-import CodeBase64 from "@/components/CodeBase64";
+import { TabsBase64 } from "@/components/layouts/TabsBase64";
 
 export default function Base64() {
   const [input, setInput] = useState("");
@@ -131,7 +131,7 @@ export default function Base64() {
         </div>
       </div>
 
-      <CodeBase64 />
+      <TabsBase64 />
     </div>
   );
 }
