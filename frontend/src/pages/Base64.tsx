@@ -5,8 +5,42 @@ import axios from "axios";
 import { HyperText } from "@/components/ui/hyper-text";
 import { DetailsCard } from "@/components/DetailsCard";
 import { TabsBase64 } from "@/components/layouts/TabsBase64";
+import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 
 export default function Base64() {
+  const testimonials = [
+    {
+      quote:
+        "Usamos codificação Base64 para transmitir dados binários, como imagens e anexos, através de APIs REST que exigem compatibilidade com formato de texto. Essa abordagem garante integridade na transferência sem depender de arquivos temporários ou headers complexos.",
+      name: "Google",
+      title: "Transmissão de imagens via APIs REST",
+    },
+    {
+      quote:
+        "A Base64 é fundamental em nosso sistema de autenticação. Tokens de acesso são gerados e incluídos nos headers de requisição em formato Base64, assegurando compatibilidade com protocolos HTTP e facilitando a leitura e validação segura dos dados no backend.",
+      name: "Auth0",
+      title: "Codificação de tokens de autenticação",
+    },
+    {
+      quote:
+        "Durante o envio de e-mails com anexos em nosso serviço, utilizamos codificação Base64 para transformar arquivos binários em texto ASCII. Isso evita a corrupção dos dados e garante compatibilidade com todos os clientes de e-mail.",
+      name: "SendGrid",
+      title: "Envio de anexos em e-mails",
+    },
+    {
+      quote:
+        "Implementamos Base64 em nosso sistema de QR Codes para embutir dados binários criptografados como strings legíveis, facilitando o transporte seguro de credenciais em ambientes de baixa largura de banda e sem conexões constantes.",
+      name: "IBM",
+      title: "Codificação de dados em QR Codes para credenciais seguras",
+    },
+    {
+      quote:
+        "Em sistemas legados, usamos Base64 para serializar e persistir imagens em campos de texto de bancos de dados SQL. Apesar de não ser ideal para grandes arquivos, a técnica mantém compatibilidade com antigos sistemas que não aceitam blobs binários.",
+      name: "Oracle",
+      title: "Serialização de imagens em bases de dados legadas",
+    },
+  ];
+
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [mode, setMode] = useState("encode");
@@ -64,7 +98,7 @@ export default function Base64() {
       />
 
       <h2 className="text-3xl mt-4 md:text-4xl font-bold mb-16 bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 text-transparent bg-clip-text">
-        Conversor RSA
+        Conversor Base64
       </h2>
 
       <div className="flex gap-6 flex-col md:flex-row w-full max-w-5xl mb-12">
@@ -132,6 +166,21 @@ export default function Base64() {
       </div>
 
       <TabsBase64 />
+
+      <div className="mt-12 h-fit w-full rounded-md flex flex-col antialiased dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
+        <InfiniteMovingCards
+          items={testimonials}
+          direction="right"
+          speed="slow"
+        />
+      </div>
+      <div className="h-fit w-full rounded-md flex flex-col antialiased dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
+        <InfiniteMovingCards
+          items={testimonials}
+          direction="left"
+          speed="slow"
+        />
+      </div>
     </div>
   );
 }
