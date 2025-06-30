@@ -1,7 +1,7 @@
 "use client";
 
-import CodeRSA from "@/components/CodeRSA";
 import { DetailsCard } from "@/components/DetailsCard";
+import { TabsRSA } from "@/components/layouts/TabsRSA";
 import { useState } from "react";
 
 export default function Rsa() {
@@ -145,7 +145,7 @@ export default function Rsa() {
         </div>
       </div>
 
-      <CodeRSA />
+       <TabsRSA />
     </div>
   );
 }
