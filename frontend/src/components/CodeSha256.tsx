@@ -6,6 +6,8 @@ export default function CodeSha256() {
       <CodeBlock
         language="c"
         filename="sha256.c"
+        maxHeigthMd="110rem"
+        maxHeigth="140rem"
         code={`#include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>

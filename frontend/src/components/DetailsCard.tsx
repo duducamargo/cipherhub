@@ -38,7 +38,7 @@ export const DetailsCard: React.FC<DetailsCardProps> = ({
           { label: "🔠 Algoritmo", value: algorithmName },
           { label: "🔐 Tipo", value: algorithmType },
           { label: "🧬 Estrutura", value: structure },
-          { label: "🧠 Reversível", value: isReversible ? "Yes" : "No" },
+          { label: "🧠 Reversível", value: isReversible ? "Sim" : "Não" },
           { label: "⚙️ Implementação", value: implementationDifficulty },
           { label: "🌐 Usos Comum", value: commonUses },
         ].map((item, index) => (

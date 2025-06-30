@@ -48,8 +48,8 @@ export function TabsHome() {
   ];
 
   return (
-    <div className="h-[225rem] md:h-[210rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start my-24">
-      <Tabs tabs={tabs} />
+    <div className="h-[225rem] md:h-[210rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start mt-8 mb-20">
+      <Tabs tabs={tabs} hoverTop={-185}/>
     </div>
   );
 }

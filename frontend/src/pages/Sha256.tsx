@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { HyperText } from "@/components/ui/hyper-text";
 import { DetailsCard } from "@/components/DetailsCard";
-import CodeSha256 from "@/components/CodeSha256 copy";
+import { TabsSha256 } from "@/components/layouts/TabsSha256";
 
 export default function Sha256() {
   const [input, setInput] = useState("");
@@ -27,7 +27,7 @@ export default function Sha256() {
   return (
     <div className="min-h-screen bg-[#111] text-white px-4 py-8 flex flex-col items-center">
       <h1 className="text-3xl mt-20 md:text-4xl font-bold mb-12 bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 text-transparent bg-clip-text">
-        Conversor Sha-256
+        Algoritmo Sha-256
       </h1>
 
       <DetailsCard
@@ -39,6 +39,10 @@ export default function Sha256() {
         commonUses="Assinaturas digitais, blockchain, verificação de integridade"
         securityLevel={5}
       />
+
+      <h2 className="text-3xl mt-4 md:text-4xl font-bold mb-12 bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 text-transparent bg-clip-text">
+        Conversor Sha-256
+      </h2>
 
       <div className="flex gap-6 flex-col md:flex-row w-full max-w-5xl mb-12">
         {/* Entrada */}
@@ -91,7 +95,7 @@ export default function Sha256() {
         </div>
       </div>
 
-       <CodeSha256 />
+      <TabsSha256 />
 
     </div>
   );

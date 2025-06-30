@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { IconCheck, IconCopy } from "@tabler/icons-react";
@@ -8,6 +8,8 @@ type CodeBlockProps = {
   language: string;
   filename: string;
   highlightLines?: number[];
+  maxHeigthMd?: string;
+  maxHeigth?: string;
 } & (
   | {
       code: string;
@@ -28,11 +30,21 @@ export const CodeBlock = ({
   language,
   filename,
   code,
+  maxHeigthMd = "90rem",
+  maxHeigth = "90rem",
   highlightLines = [],
   tabs = [],
 }: CodeBlockProps) => {
   const [copied, setCopied] = React.useState(false);
   const [activeTab, setActiveTab] = React.useState(0);
+  const [isMd, setIsMd] = useState(false);
+
+  useEffect(() => {
+    const checkSize = () => setIsMd(window.innerWidth >= 768);
+    checkSize();
+    window.addEventListener("resize", checkSize);
+    return () => window.removeEventListener("resize", checkSize);
+  }, []);
 
   const tabsExist = tabs.length > 0;
 
@@ -54,7 +66,12 @@ export const CodeBlock = ({
     : highlightLines;
 
   return (
-    <div className="relative w-[95%] sm:w-[83%] max-h-[500px] overflow-auto rounded-lg bg-zinc-900 p-4 font-mono text-sm">
+    <div
+      className="relative overflow-auto rounded-lg bg-zinc-900 p-4 font-mono text-sm"
+      style={{
+        maxHeight: isMd ? maxHeigthMd : maxHeigth,
+      }}
+    >
       <div className="flex flex-col gap-2">
         {tabsExist && (
           <div className="flex  overflow-x-auto">
@@ -85,6 +102,7 @@ export const CodeBlock = ({
           </div>
         )}
       </div>
+
       <SyntaxHighlighter
         language={activeLanguage}
         style={dracula}
@@ -92,7 +110,7 @@ export const CodeBlock = ({
           margin: 0,
           padding: 0,
           background: "transparent",
-          fontSize: "0.875rem", // text-sm equivalent
+          fontSize: "0.875rem",
         }}
         wrapLines={true}
         showLineNumbers={true}
