@@ -1,10 +1,10 @@
 "use client";
 
 import { Tabs } from "../ui/tabs";
-import { TabDefinition } from "../TabDefinition";
-import { TabHistory } from "../TabHistory";
-import { TabSymetricEncryption } from "../TabSymmetricEncryption";
-import { TabAssymetricEncryption } from "../TabAssymmetricEncryption";
+import { TabDefinition } from "../tabs/TabDefinition";
+import { TabHistory } from "../tabs/TabHistory";
+import { TabSymetricEncryption } from "../tabs/TabSymmetricEncryption";
+import { TabAssymetricEncryption } from "../tabs/TabAssymmetricEncryption";
 
 export function TabsHome() {
   const tabs = [
@@ -48,8 +48,8 @@ export function TabsHome() {
   ];
 
   return (
-    <div className="h-[225rem] md:h-[210rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start my-24">
-      <Tabs tabs={tabs} />
+    <div className="h-[225rem] md:h-[210rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start mt-8 mb-20">
+      <Tabs tabs={tabs} hoverTop={-185}/>
     </div>
   );
 }

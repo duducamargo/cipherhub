@@ -1,7 +1,7 @@
 "use client";
 
 import HomeTitle from "../components/layouts/HomeTitle";
-import CanvasRevealHome from "../components/layouts/CanvasRevealHome";
+import CanvasRevealHome from "@/components/layouts/CanvasRevealHome";
 import { TabsHome } from "@/components/layouts/TabsHome";
 import { motion } from "framer-motion";
 

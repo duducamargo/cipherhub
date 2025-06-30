@@ -9,10 +9,27 @@ app.use(express.json());
 
 const shaPath = path.join(__dirname, "src", "output", "sha256.exe");
 const rsaPath = path.join(__dirname, "src", "output", "rsa.exe");
+const base64Path = path.join(__dirname, "src", "output", "base64.exe");
 
 app.post("/sha256", (req, res) => {
   const { text } = req.body;
   exec(`"${shaPath}" "${text}"`, (err, stdout, stderr) => {
+    if (err) return res.status(500).json({ error: stderr });
+    res.json({ result: stdout.trim() });
+  });
+});
+
+app.post("/base64/encode", (req, res) => {
+  const { text } = req.body;
+  exec(`"${base64Path}" 1 "${text}"`, (err, stdout, stderr) => {
+    if (err) return res.status(500).json({ error: stderr });
+    res.json({ result: stdout.trim() });
+  });
+});
+
+app.post("/base64/decode", (req, res) => {
+  const { text } = req.body;
+  exec(`"${base64Path}" 2 "${text}"`, (err, stdout, stderr) => {
     if (err) return res.status(500).json({ error: stderr });
     res.json({ result: stdout.trim() });
   });

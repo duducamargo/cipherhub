@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 type Tab = {
   title: string;
   value: string;
+  hoverTop?: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   content?: string | React.ReactNode | any;
 };
@@ -16,6 +17,7 @@ export const Tabs = ({
   containerClassName,
   activeTabClassName,
   tabClassName,
+  hoverTop,
   contentClassName,
 }: {
   tabs: Tab[];
@@ -23,6 +25,7 @@ export const Tabs = ({
   activeTabClassName?: string;
   tabClassName?: string;
   contentClassName?: string;
+  hoverTop?: number;
 }) => {
   const [active, setActive] = useState<Tab>(propTabs[0]);
   const [tabs, setTabs] = useState<Tab[]>(propTabs);
@@ -82,6 +85,7 @@ export const Tabs = ({
         tabs={tabs}
         active={active}
         key={active.value}
+        hoverTop={hoverTop}
         hovering={hovering}
         className={cn("mt-20", contentClassName)}
       />
@@ -93,11 +97,13 @@ export const FadeInDiv = ({
   className,
   tabs,
   hovering,
+  hoverTop,
 }: {
   className?: string;
   key?: string;
   tabs: Tab[];
   active: Tab;
+  hoverTop?: number;
   hovering?: boolean;
 }) => {
   const isActive = (tab: Tab) => {
@@ -111,7 +117,7 @@ export const FadeInDiv = ({
           layoutId={tab.value}
           style={{
             scale: 1 - idx * 0.1,
-            top: hovering ? idx * -185 : 0,
+            top: hovering ? idx * (hoverTop ?? 0) : 0,
             zIndex: -idx,
             opacity: idx < 3 ? 1 - idx * 0.1 : 0,
           }}
