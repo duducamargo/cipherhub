@@ -11,11 +11,11 @@ interface DetailsCardProps {
 }
 
 const levelColors = {
-  1: "bg-red-500",
-  2: "bg-orange-400",
-  3: "bg-yellow-400",
-  4: "bg-green-500",
-  5: "bg-blue-500",
+  1: "bg-red-600 shadow-red-500/40",
+  2: "bg-orange-500 shadow-orange-400/40",
+  3: "bg-yellow-400 shadow-yellow-300/40",
+  4: "bg-green-500 shadow-green-400/40",
+  5: "bg-blue-500 shadow-blue-400/40",
 };
 
 export const DetailsCard: React.FC<DetailsCardProps> = ({
@@ -28,67 +28,41 @@ export const DetailsCard: React.FC<DetailsCardProps> = ({
   securityLevel,
 }) => {
   return (
-    <div className="w-full max-w-5xl mx-auto mb-10 px-8 py-8 rounded-3xl bg-neutral-900 border border-neutral-800 shadow-2xl">
-      <h2 className="text-3xl font-bold text-white mb-8 tracking-tight flex items-center gap-2">
-        🔍 Detalhes do Algoritmo
+    <div className="neon-runner-border w-full max-w-6xl mx-auto mb-12 px-8 py-10 bg-gradient-to-br from-neutral-900 via-neutral-950 to-zinc-900 rounded-3xl shadow-[0_0_25px_rgba(0,0,0,0.7)]">
+      <h2 className="text-3xl font-bold text-white mb-10 tracking-tight flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
+        🚀 Detalhes do Algoritmo
       </h2>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-sm text-gray-300">
-        {/* CARD */}
-        <div className="bg-neutral-800/60 p-4 rounded-xl">
-          <p className="text-gray-400 font-semibold flex items-center gap-2">
-            🔠 Algoritmo
-          </p>
-          <p className="text-white mt-1">{algorithmName}</p>
-        </div>
-
-        <div className="bg-neutral-800/60 p-4 rounded-xl">
-          <p className="text-gray-400 font-semibold flex items-center gap-2">
-            🔐 Tipo
-          </p>
-          <p className="text-white mt-1">{algorithmType}</p>
-        </div>
-
-        <div className="bg-neutral-800/60 p-4 rounded-xl">
-          <p className="text-gray-400 font-semibold flex items-center gap-2">
-            🧬 Estrutura Interna
-          </p>
-          <p className="text-white mt-1">{structure}</p>
-        </div>
-
-        <div className="bg-neutral-800/60 p-4 rounded-xl">
-          <p className="text-gray-400 font-semibold flex items-center gap-2">
-            🧠 Reversível
-          </p>
-          <p className="text-white mt-1">{isReversible ? "Sim" : "Não"}</p>
-        </div>
-
-        <div className="bg-neutral-800/60 p-4 rounded-xl">
-          <p className="text-gray-400 font-semibold flex items-center gap-2">
-            ⚙️ Dificuldade
-          </p>
-          <p className="text-white mt-1">{implementationDifficulty}</p>
-        </div>
-
-        <div className="bg-neutral-800/60 p-4 rounded-xl">
-          <p className="text-gray-400 font-semibold flex items-center gap-2">
-            🌐 Usos Comuns
-          </p>
-          <p className="text-white mt-1">{commonUses}</p>
-        </div>
+        {[
+          { label: "🔠 Algoritmo", value: algorithmName },
+          { label: "🔐 Tipo", value: algorithmType },
+          { label: "🧬 Estrutura", value: structure },
+          { label: "🧠 Reversível", value: isReversible ? "Yes" : "No" },
+          { label: "⚙️ Implementação", value: implementationDifficulty },
+          { label: "🌐 Usos Comum", value: commonUses },
+        ].map((item, index) => (
+          <div
+            key={index}
+            className="bg-neutral-800/70 hover:bg-neutral-800/90 transition-all duration-300 p-5 rounded-xl border border-neutral-700 shadow-md backdrop-blur-md"
+          >
+            <p className="text-gray-400 font-semibold mb-1">{item.label}</p>
+            <p className="text-white text-base font-medium">{item.value}</p>
+          </div>
+        ))}
       </div>
 
-      <div className="mt-10 text-center">
-        <p className="text-gray-400 font-semibold mb-3 flex items-center justify-center gap-2 text-base">
-          🔒 Nível de Segurança
+      <div className="mt-12 text-center">
+        <p className="text-gray-300 font-semibold mb-4 flex justify-center items-center text-base">
+          🛡️ Nível de Segurança
         </p>
-        <div className="flex justify-center gap-3 mb-2">
+        <div className="flex justify-center gap-3 mb-3">
           {[1, 2, 3, 4, 5].map((i) => (
             <div
               key={i}
-              className={`w-8 h-4 rounded-sm hover:opacity-75 transition-all duration-300 ${
+              className={`w-8 h-4 rounded-full hover:opacity-70 transition-all duration-300 ${
                 i <= securityLevel
-                  ? levelColors[securityLevel]
+                  ? `${levelColors[securityLevel]} shadow-md`
                   : "bg-neutral-700"
               }`}
             />
@@ -96,10 +70,10 @@ export const DetailsCard: React.FC<DetailsCardProps> = ({
         </div>
         <p className="text-sm text-gray-500 italic">
           {securityLevel === 5 && "Muito seguro para aplicações modernas."}
-          {securityLevel === 4 && "Seguro, amplamente confiável."}
-          {securityLevel === 3 && "Razoável, use com cuidado."}
-          {securityLevel === 2 && "Pouco seguro, evite em contextos críticos."}
-          {securityLevel === 1 && "Inseguro, não recomendado."}
+          {securityLevel === 4 && "Seguro e amplamente confiável."}
+          {securityLevel === 3 && "Moderadamente seguro — use com cautela."}
+          {securityLevel === 2 && "Fraco — evite em contextos sensíveis."}
+          {securityLevel === 1 && "Inseguro — não recomendado."}
         </p>
       </div>
     </div>

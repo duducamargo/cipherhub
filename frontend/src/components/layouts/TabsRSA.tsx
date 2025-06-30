@@ -6,7 +6,7 @@ import { TabHistory } from "../tabs/TabHistory";
 import { TabSymetricEncryption } from "../tabs/TabSymmetricEncryption";
 import { TabAssymetricEncryption } from "../tabs/TabAssymmetricEncryption";
 
-export function TabsHome() {
+export function TabsRSA() {
   const tabs = [
     {
       title: "Definição",

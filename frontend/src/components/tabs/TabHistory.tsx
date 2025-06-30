@@ -1,7 +1,7 @@
 "use client";
 
 import { twMerge } from "tailwind-merge";
-import { TracingBeam } from "./ui/tracing-bream";
+import { TracingBeam } from "../ui/tracing-bream";
 import { motion } from "framer-motion";
 
 
