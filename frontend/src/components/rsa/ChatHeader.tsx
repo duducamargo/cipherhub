@@ -65,7 +65,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
       </div>
       {currentMode === "encrypt" && (
         <button
-          className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-medium transition-colors transform hover:scale-[1.01] active:scale-95"
+          className="w-full cursor-pointer px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-medium transition-colors transform hover:scale-[1.01] active:scale-95"
           onClick={handleGenerateKeys}
         >
           <KeyRound className="inline-block mr-2" size={18} /> Gerar Chaves

@@ -48,7 +48,7 @@ export const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
             </p>
             <p className="mt-2 text-xs text-neutral-300">
               Original:{" "}
-              <span className="font-mono">{message.encryptedContent}</span>
+              <span className="font-mono">{message.decryptedContent}</span>
             </p>
           </div>
         )}
