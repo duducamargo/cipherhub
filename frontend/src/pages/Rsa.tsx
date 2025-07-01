@@ -209,7 +209,7 @@ export default function Rsa() {
       <h2 className="text-3xl mt-4 md:text-4xl font-bold mb-8 bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 text-transparent bg-clip-text">
         RSA Chat
       </h2>
-      <div className="w-full max-w-3xl bg-neutral-900 rounded-lg shadow-xl overflow-hidden flex flex-col h-[70vh] border border-neutral-700">
+      <div className="w-full max-w-4xl mb-8 bg-neutral-900 rounded-lg shadow-xl overflow-hidden flex flex-col h-[80vh] border border-neutral-700">
         <div className="p-4 border-b border-neutral-800 bg-neutral-800 flex flex-col gap-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="flex flex-col gap-1">
@@ -245,10 +245,9 @@ export default function Rsa() {
                 placeholder="Insira o valor de E"
               />
             </div>
-            {/* REMOVIDO: Bloco de chaves estáticas de descriptografia */}
           </div>
           <button
-            className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-medium transition-colors transform hover:scale-[1.01] active:scale-95"
+            className="w-full px-4 py-2 bg-blue-600 cursor-pointer text-white rounded hover:bg-blue-700 font-medium transform hover:scale-[1.01] active:scale-95 transition-all"
             onClick={handleGenerateKeys}
           >
             <KeyRound className="inline-block mr-2" size={18} /> Gerar Chaves
@@ -305,7 +304,6 @@ export default function Rsa() {
                     </p>
                   </div>
                 )}
-                {/* REMOVIDO: Bloco de Mensagem Descriptografada */}
                 <p className="text-right text-xs text-neutral-400 mt-2">
                   {msg.timestamp.toLocaleTimeString()}
                 </p>
@@ -315,7 +313,6 @@ export default function Rsa() {
         </div>
         {/* Área de Entrada do Chat */}
         <div className="p-4 border-t border-neutral-800 bg-neutral-800 flex items-center gap-3">
-          {/* REMOVIDO: Botões de "Criptografar" / "Descriptografar" */}
           <input
             type="text"
             className="flex-1 p-3 rounded-lg bg-neutral-700 text-white outline-none border border-neutral-600 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all text-sm shadow-inner"
@@ -326,10 +323,10 @@ export default function Rsa() {
                 handleProcessMessage();
               }
             }}
-            placeholder="Digite a mensagem para criptografar..." // Placeholder fixo
+            placeholder="Digite a mensagem para criptografar..." 
           />
           <button
-            className="p-3 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-all transform hover:scale-[1.05] active:scale-95 shadow-md shadow-pink-900/50"
+            className="p-3 cursor-pointer bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-all transform hover:scale-[1.05] active:scale-95 shadow-md shadow-pink-900/50"
             onClick={handleProcessMessage}
           >
             <SendHorizonal size={20} />
