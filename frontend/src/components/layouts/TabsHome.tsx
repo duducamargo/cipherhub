@@ -12,7 +12,7 @@ export function TabsHome() {
       title: "Definição",
       value: "definicao",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-600 to-violet-900">
+        <div className="w-full overflow-hidden relative h-full rounded-2xl py-10 px-4 sm:p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-600 to-violet-900">
           <TabDefinition />
         </div>
       ),
@@ -21,7 +21,7 @@ export function TabsHome() {
       title: "História",
       value: "historia",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-600 to-violet-900">
+        <div className="w-full overflow-hidden relative h-full rounded-2xl py-10 px-4 sm:p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-600 to-violet-900">
           <TabHistory />
         </div>
       ),
@@ -30,7 +30,7 @@ export function TabsHome() {
       title: "Criptografia Simétrica",
       value: "criptografia-simetrica",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-600 to-violet-900">
+        <div className="w-full overflow-hidden relative h-full rounded-2xl py-10 px-4 sm:p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-600 to-violet-900">
           <TabSymetricEncryption />
         </div>
       ),
@@ -39,7 +39,7 @@ export function TabsHome() {
       title: "Criptografia Assimétrica",
       value: "criptografia-assimetrica",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-600 to-violet-900">
+        <div className="w-full overflow-hidden relative h-full rounded-2xl py-10 px-4 sm:p-100 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-600 to-violet-900">
           <TabAssymetricEncryption />
         </div>
       ),
@@ -48,7 +48,7 @@ export function TabsHome() {
   ];
 
   return (
-    <div className="h-[225rem] md:h-[210rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start mt-8 mb-20">
+    <div className="h-[210rem] md:h-[210rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start mt-8 mb-20">
       <Tabs tabs={tabs} hoverTop={-185}/>
     </div>
   );

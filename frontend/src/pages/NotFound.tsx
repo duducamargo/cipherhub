@@ -2,8 +2,16 @@
 
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useLoading } from "@/contexts/LoadingContext";
+import { useEffect } from "react";
 
 const NotFound = () => {
+  const { hideLoading } = useLoading();
+
+  useEffect(() => {
+    hideLoading();
+  }, [hideLoading]);
+
   return (
     <div className="relative w-full h-screen flex items-center justify-center bg-gradient-to-br from-neutral-950 via-black to-neutral-900 text-white overflow-hidden">
       <div className="absolute inset-0 z-0 pointer-events-none animate-pulse bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-purple-700/10 via-blue-600/10 to-transparent" />
@@ -36,7 +44,7 @@ const NotFound = () => {
           to="/"
           className="inline-block px-6 py-3 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-purple-600 hover:to-indigo-500 transition-all duration-300 text-white font-semibold shadow-md hover:shadow-xl"
         >
-        Voltar para Home
+          Voltar para Home
         </Link>
       </motion.div>
     </div>

@@ -1,13 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { HyperText } from "@/components/ui/hyper-text";
 import { DetailsCard } from "@/components/DetailsCard";
 import { TabsBase64 } from "@/components/layouts/TabsBase64";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
+import { useLoading } from "@/contexts/LoadingContext";
 
 export default function Base64() {
+  const { hideLoading } = useLoading();
+
+  useEffect(() => {
+    hideLoading();
+  }, [hideLoading]);
+
   const testimonials = [
     {
       quote:
@@ -83,7 +90,7 @@ export default function Base64() {
 
   return (
     <div className="min-h-screen bg-[#111] text-white px-4 py-8 flex flex-col items-center">
-      <h1 className="text-3xl mt-20 md:text-4xl font-bold mb-12 bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 text-transparent bg-clip-text">
+      <h1 className="text-3xl h-[45px] mt-20 md:text-4xl font-bold mb-12 bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 text-transparent bg-clip-text">
         Algoritmo Base64
       </h1>
 
@@ -92,7 +99,7 @@ export default function Base64() {
         algorithmType="Codificação (não criptográfica)"
         structure="Transformação binária para texto ASCII usando blocos de 6 bits"
         isReversible={true}
-        implementationDifficulty="Baixa"
+        implementationDifficulty="Dificuldade Baixa"
         commonUses="Envio de dados binários via texto (e.g., e-mails, URLs), armazenamento de imagens"
         securityLevel={2}
       />

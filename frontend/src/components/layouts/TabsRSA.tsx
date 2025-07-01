@@ -10,7 +10,7 @@ export function TabsRSA() {
       title: "Definição",
       value: "definicao",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-600 to-violet-900">
+        <div className="w-full overflow-hidden relative h-full rounded-2xl py-10 px-4 sm:p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-600 to-violet-900">
           <TabRSADefinition />
         </div>
       ),
@@ -19,7 +19,7 @@ export function TabsRSA() {
       title: "Código RSA",
       value: "codigo-rsa",
       content: (
-        <div className="w-full overflow-hidden relative h-full rounded-2xl p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-600 to-violet-900">
+        <div className="w-full overflow-hidden relative h-full rounded-2xl py-10 px-0 sm:p-10 text-xl md:text-4xl font-bold text-white bg-gradient-to-br from-purple-600 to-violet-900">
           <TabRSACode />
         </div>
       ),

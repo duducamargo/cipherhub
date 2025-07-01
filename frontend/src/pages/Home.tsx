@@ -1,11 +1,18 @@
-"use client";
-
+import React, { useEffect } from "react";
 import HomeTitle from "../components/layouts/HomeTitle";
 import CanvasRevealHome from "@/components/layouts/CanvasRevealHome";
 import { TabsHome } from "@/components/layouts/TabsHome";
 import { motion } from "framer-motion";
+import { useLoading } from "../contexts/LoadingContext"; 
 
-export default function App() {
+export default function Home() {
+  const { hideLoading } = useLoading();
+
+  useEffect(() => {
+    hideLoading();
+
+  }, [hideLoading]); 
+
   return (
     <div className="bg-[#111] text-white w-full min-h-screen flex flex-col items-center justify-center space-y-12">
       <HomeTitle />

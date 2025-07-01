@@ -3,9 +3,16 @@
 import { DetailsCard } from "@/components/DetailsCard";
 import { TabsRSA } from "@/components/layouts/TabsRSA";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
-import { useState } from "react";
+import { useLoading } from "@/contexts/LoadingContext";
+import { useEffect, useState } from "react";
 
 export default function Rsa() {
+  const { hideLoading } = useLoading();
+
+  useEffect(() => {
+    hideLoading();
+  }, [hideLoading]);
+
   const testimonials = [
     {
       quote:
@@ -66,7 +73,7 @@ export default function Rsa() {
 
   return (
     <div className="min-h-screen bg-[#111] text-white px-4 py-8 flex flex-col items-center">
-      <h1 className="text-3xl mt-20 md:text-4xl font-bold mb-12 bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 text-transparent bg-clip-text">
+      <h1 className="text-3xl h-[45px] mt-20 md:text-4xl font-bold mb-12 bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 text-transparent bg-clip-text">
         Algoritmo RSA
       </h1>
 
@@ -75,7 +82,7 @@ export default function Rsa() {
         algorithmType="Criptografia Assimétrica"
         structure="Chaves pública e privada com base em fatoração de primos"
         isReversible={true}
-        implementationDifficulty="Alta, especialmente para gerar chaves e operar com grandes primos"
+        implementationDifficulty="Dificuldade Média/Alta, especialmente para gerar chaves e operar com grandes primos"
         commonUses="Troca segura de chaves, assinatura digital, comunicação segura"
         securityLevel={4}
       />

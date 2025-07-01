@@ -67,7 +67,7 @@ export const CodeBlock = ({
 
   return (
     <div
-      className="relative overflow-auto rounded-lg bg-zinc-900 p-4 font-mono text-sm"
+      className="relative overflow-auto no-visible-scrollbar rounded-lg bg-zinc-900 p-4 font-mono text-sm shadow-lg shadow-black/30"
       style={{
         maxHeight: isMd ? maxHeigthMd : maxHeigth,
       }}
