@@ -10,7 +10,9 @@ export default function Rsa() {
   const { hideLoading } = useLoading();
 
   useEffect(() => {
-    hideLoading();
+    setTimeout(() => {
+      hideLoading();
+    }, 500);
   }, [hideLoading]);
 
   const testimonials = [

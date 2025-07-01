@@ -12,7 +12,9 @@ export default function Sha256() {
   const { hideLoading } = useLoading();
 
   useEffect(() => {
-    hideLoading();
+    setTimeout(() => {
+      hideLoading();
+    }, 500);
   }, [hideLoading]);
 
   const testimonials = [

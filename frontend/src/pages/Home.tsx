@@ -9,6 +9,9 @@ export default function Home() {
   const { hideLoading } = useLoading();
 
   useEffect(() => {
+    setTimeout(() => {
+      hideLoading();
+    }, 500);
     hideLoading();
 
   }, [hideLoading]); 
