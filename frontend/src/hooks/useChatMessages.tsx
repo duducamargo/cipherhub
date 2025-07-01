@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 interface UseChatMessagesReturn {
   messages: ChatMessage[];
   addMessage: (message: Omit<ChatMessage, "id" | "timestamp">) => void;
-  chatContainerRef: React.RefObject<HTMLDivElement>;
+  chatContainerRef: React.RefObject<HTMLDivElement | null>;
 }
 
 export const useChatMessages = (): UseChatMessagesReturn => {
