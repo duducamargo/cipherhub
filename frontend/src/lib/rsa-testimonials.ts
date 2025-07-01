@@ -1,8 +1,4 @@
-export interface Testimonial {
-  quote: string;
-  name: string;
-  title: string;
-}
+import type { Testimonial } from "./testimonials-types";
 
 export const rsaTestimonials: Testimonial[] = [
   {
