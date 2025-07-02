@@ -64,11 +64,6 @@ const dummyContent = [
           descriptografar a informação. Isso garante que qualquer um possa
           enviar mensagens seguras, mas apenas o destinatário poderá ler.
         </p>
-        <p>
-          Essa técnica é amplamente utilizada em ambientes onde as partes não se
-          conhecem previamente, como na internet, pois elimina a necessidade de
-          trocar senhas com antecedência.
-        </p>
       </>
     ),
   },
@@ -81,9 +76,7 @@ const dummyContent = [
       <>
         <p>
           A base da criptografia assimétrica está na geração de dois componentes
-          interdependentes: a chave pública e a chave privada. Embora estejam
-          matematicamente ligadas, é praticamente impossível derivar uma a
-          partir da outra em um tempo viável, mesmo com computadores potentes.
+          interdependentes: a chave pública e a chave privada.
         </p>
         <ul>
           <li>
@@ -136,11 +129,6 @@ const dummyContent = [
             chave menores, o que o torna ideal para dispositivos móveis ou com
             poucos recursos.
           </li>
-          <li>
-            <strong>ElGamal:</strong> Usado em assinaturas digitais e troca de
-            chaves seguras, é baseado na dificuldade do problema do logaritmo
-            discreto.
-          </li>
         </ul>
         <p>
           Cada algoritmo tem pontos fortes distintos. Por exemplo, o RSA é
@@ -180,15 +168,6 @@ const dummyContent = [
             mensagens confidenciais.
           </li>
         </ul>
-        <p>
-          Além disso, a criptografia assimétrica é parte essencial de carteiras
-          de criptomoedas, autenticação em sistemas de login e proteção de dados
-          em bancos, hospitais e órgãos governamentais.
-        </p>
-        <p>
-          Em um mundo cada vez mais conectado, esse tipo de criptografia é uma
-          peça-chave na construção da confiança digital.
-        </p>
       </>
     ),
   },

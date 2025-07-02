@@ -28,8 +28,8 @@ export function TabsSha256() {
   ];
 
   return (
-    <div className="h-[160em] md:h-[125rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start mt-8 mb-20">
-      <Tabs tabs={tabs} hoverTop={-130}/>
+    <div className="h-[145rem] md:h-[125rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start mt-8 mb-20">
+      <Tabs tabs={tabs} hoverTop={-140}/>
     </div>
   );
 }

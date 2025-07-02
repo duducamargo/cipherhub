@@ -6,7 +6,7 @@ export default function CodeRSA() {
       <CodeBlock
         language="c"
         filename="rsa.c"
-        maxHeigthMd="100rem"
+        maxHeigthMd="85rem"
         maxHeigth="100rem"
         code={`#include <stdio.h>
 #include <stdint.h>

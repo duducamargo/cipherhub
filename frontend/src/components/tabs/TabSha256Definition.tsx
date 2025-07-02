@@ -49,7 +49,7 @@ const sha256Content = [
     title: "O que é o algoritmo SHA-256?",
     badge: "Definição",
     image:
-      "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://cdn.pixabay.com/photo/2025/04/23/17/33/shield-9553554_1280.jpg",
 
     description: (
       <>
@@ -78,7 +78,7 @@ const sha256Content = [
     title: "Passo a passo da implementação do SHA-256",
     badge: "Passo a Passo",
     image:
-      "https://itshow.com.br/wp-content/uploads/2025/02/portalitshow_A_futuristic_cybersecurity_design_featuring_a_gl_fef22de1-59b7-47c0-a30e-dc67906aecd4_1.png",
+      "https://cdn.pixabay.com/photo/2020/03/06/13/55/security-4907127_1280.jpg",
 
     description: (
       <>

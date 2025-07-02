@@ -6,8 +6,8 @@ export default function CodeBase64() {
       <CodeBlock
         language="c"
         filename="base64.c"
-        maxHeigthMd="90rem"
-        maxHeigth="100rem"
+        maxHeigthMd="100rem"
+        maxHeigth="105rem"
         code={`// Tabela Base64 contendo os 64 caracteres válidos para codificação
 const char BASE64_TABLE[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 

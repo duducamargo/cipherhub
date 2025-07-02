@@ -28,8 +28,8 @@ export function TabsBase64() {
   ];
 
   return (
-    <div className="h-[120em] md:h-[105rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start mt-8 mb-20">
-      <Tabs tabs={tabs} hoverTop={-120}/>
+    <div className="h-[120em] md:h-[115rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start mt-8 mb-20">
+      <Tabs tabs={tabs} hoverTop={-125}/>
     </div>
   );
 }

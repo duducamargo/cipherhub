@@ -14,7 +14,8 @@ interface RsaChatContainerProps {
   currentMode: ChatMode; 
 
   messages: ChatMessage[];
-  chatContainerRef: React.RefObject<HTMLDivElement>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  chatContainerRef: any;
 
   inputMessage: string;
   setInputMessage: (value: string) => void;

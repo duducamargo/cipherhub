@@ -7,7 +7,7 @@ export default function CodeSha256() {
         language="c"
         filename="sha256.c"
         maxHeigthMd="110rem"
-        maxHeigth="140rem"
+        maxHeigth="130rem"
         code={`#include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>

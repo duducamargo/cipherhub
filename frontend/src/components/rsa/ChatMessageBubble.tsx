@@ -1,6 +1,6 @@
-// src/components/rsa/ChatMessageBubble.tsx
 import React from "react";
-import { Lock, } from "lucide-react";
+import { Lock } from "lucide-react";
+import { motion, type Variants, type Easing } from "framer-motion"; 
 import type { ChatMessage } from "./types";
 
 interface ChatMessageBubbleProps {
@@ -10,6 +10,23 @@ interface ChatMessageBubbleProps {
 export const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
   message,
 }) => {
+  const animationVariants: Variants = {
+    hidden: {
+      opacity: 0,
+      y: message.sender === "user" ? 20 : 20,
+      x: message.sender === "user" ? 20 : -20,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      x: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeOut" as Easing,
+      },
+    },
+  };
+
   return (
     <div
       key={message.id}
@@ -17,7 +34,10 @@ export const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
         message.sender === "user" ? "justify-end" : "justify-start"
       }`}
     >
-      <div
+      <motion.div
+        variants={animationVariants}
+        initial="hidden"
+        animate="visible"
         className={`max-w-[75%] p-4 rounded-xl shadow-lg border ${
           message.sender === "user"
             ? "bg-purple-700 text-white border-purple-600 rounded-br-none"
@@ -27,7 +47,7 @@ export const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
             ? "bg-red-800 text-white border-red-700"
             : message.type === "info"
             ? "bg-blue-800 text-white border-blue-700"
-            : "" // static-keys type will be handled by content.
+            : ""
         }`}
       >
         <p className="font-bold text-sm mb-1 opacity-90">
@@ -37,7 +57,6 @@ export const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
           {message.content}
         </p>
 
-        {/* Bloco de Mensagem Criptografada */}
         {message.type === "encrypted" && message.encryptedContent && (
           <div className="mt-3 pt-3 border-t border-dashed border-purple-500">
             <p className="text-xs font-semibold text-purple-200 mb-1 flex items-center">
@@ -52,22 +71,10 @@ export const ChatMessageBubble: React.FC<ChatMessageBubbleProps> = ({
             </p>
           </div>
         )}
-        {/* Bloco de Mensagem Descriptografada (se você reintroduzir) */}
-        {/* {message.type === "decrypted" && message.decryptedContent && (
-          <div className="mt-3 pt-3 border-t border-dashed border-green-500">
-            <p className="text-xs font-semibold text-green-200 mb-1 flex items-center">
-              <Unlock size={14} className="inline-block mr-1" /> Descriptografado:
-            </p>
-            <p className="font-mono text-xs break-all bg-green-900/50 p-2 rounded-md">{message.decryptedContent}</p>
-            <p className="mt-2 text-xs text-neutral-300">
-              Input: <span className="font-mono">{message.encryptedContent}</span>
-            </p>
-          </div>
-        )} */}
         <p className="text-right text-xs text-neutral-400 mt-2">
           {message.timestamp.toLocaleTimeString()}
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 };

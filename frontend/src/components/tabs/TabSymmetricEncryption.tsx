@@ -139,17 +139,8 @@ const dummyContent = [
             ou 256 bits.
           </li>
           <li>
-            <strong>DES (Data Encryption Standard):</strong> Um dos primeiros
-            algoritmos amplamente usados. Hoje é considerado obsoleto por ser
-            vulnerável a ataques de força bruta.
-          </li>
-          <li>
             <strong>Triple DES (3DES):</strong> Uma versão mais segura do DES,
             onde a criptografia é feita três vezes com diferentes chaves.
-          </li>
-          <li>
-            <strong>Blowfish e Twofish:</strong> Alternativas seguras e rápidas,
-            frequentemente usadas em aplicações onde o desempenho é crítico.
           </li>
         </ul>
         <p>
@@ -187,13 +178,6 @@ const dummyContent = [
             • Comunicação segura entre servidores dentro de redes corporativas.
           </li>
         </ul>
-        <p>
-          Ela também é usada em conjunto com a criptografia assimétrica em
-          sistemas híbridos, onde a chave simétrica é trocada de forma segura
-          usando criptografia assimétrica, garantindo desempenho e segurança ao
-          mesmo tempo.
-        </p>
-        <p>Sua aplicação continua sendo vital para o mundo digital moderno.</p>
       </>
     ),
   },

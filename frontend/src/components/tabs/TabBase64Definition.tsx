@@ -49,7 +49,7 @@ const base64Content = [
     title: "O que é o algoritmo Base64?",
     badge: "Definição",
     image:
-      "https://images.unsplash.com/photo-1584433144859-1fc3ab64a957?auto=format&fit=crop&w=1950&q=80",
+      "https://cdn.pixabay.com/photo/2020/02/21/17/09/security-4868172_1280.jpg",
     description: (
       <>
         <p>
@@ -76,7 +76,7 @@ const base64Content = [
     title: "Passo a passo da codificação Base64",
     badge: "Passo a Passo",
     image:
-      "https://itshow.com.br/wp-content/uploads/2025/02/portalitshow_A_futuristic_cybersecurity_design_featuring_a_gl_fef22de1-59b7-47c0-a30e-dc67906aecd4_1.png",
+      "https://cdn.pixabay.com/photo/2020/05/17/07/48/digitization-5180477_1280.jpg",
 
     description: (
       <>

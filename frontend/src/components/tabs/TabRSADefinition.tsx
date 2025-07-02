@@ -49,7 +49,7 @@ const rsaContent = [
     title: "O que é o algoritmo RSA?",
     badge: "Definição",
     image:
-      "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://cdn.pixabay.com/photo/2024/10/15/23/10/ai-generated-9123440_1280.jpg",
     description: (
       <>
         <p>
@@ -76,7 +76,7 @@ const rsaContent = [
     title: "Passo a passo da implementação do RSA",
     badge: "Passo a Passo",
     image:
-      "https://itshow.com.br/wp-content/uploads/2025/02/portalitshow_A_futuristic_cybersecurity_design_featuring_a_gl_fef22de1-59b7-47c0-a30e-dc67906aecd4_1.png",
+      "https://cdn.pixabay.com/photo/2021/08/20/15/42/computer-6560745_1280.jpg",
     description: (
       <>
         <ol className="list-decimal list-inside space-y-2">
