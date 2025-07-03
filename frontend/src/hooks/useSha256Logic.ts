@@ -8,7 +8,7 @@ interface UseSha256LogicReturn {
   handleProcess: () => Promise<void>;
 }
 
-const API_BASE = import.meta.env.VITE_APP_BACKEND_URL || "http://localhost:3001";
+const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:3001";
 
 export const useSha256Logic = (): UseSha256LogicReturn => {
   const [input, setInput] = useState("");
