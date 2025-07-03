@@ -1,4 +1,9 @@
-import React, { createContext, useState, useContext, useCallback } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useCallback,
+} from "react";
 import type { ReactNode } from "react";
 
 interface LoadingContextType {
@@ -13,8 +18,10 @@ export const LoadingProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+
   const showLoading = useCallback(() => setIsLoading(true), []);
-  const hideLoading = useCallback(() => setIsLoading(false), []); 
+  const hideLoading = useCallback(() => setIsLoading(false), []);
+
   return (
     <LoadingContext.Provider value={{ isLoading, showLoading, hideLoading }}>
       {children}

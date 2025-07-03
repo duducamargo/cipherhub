@@ -3,15 +3,18 @@ import HomeTitle from "../components/layouts/HomeTitle";
 import CanvasRevealHome from "@/components/layouts/CanvasRevealHome";
 import { TabsHome } from "@/components/layouts/TabsHome";
 import { motion } from "framer-motion";
-import { useLoading } from "../contexts/LoadingContext";
+import { useLoading } from "../contexts/LoadingContext"; 
 
 export default function Home() {
   const { hideLoading } = useLoading();
 
   useEffect(() => {
+    setTimeout(() => {
+      hideLoading();
+    }, 100);
     hideLoading();
-    hideLoading();
-  }, [hideLoading]);
+
+  }, [hideLoading]); 
 
   return (
     <div className="bg-[#111] text-white w-full min-h-screen flex flex-col items-center justify-center space-y-12">

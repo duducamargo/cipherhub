@@ -30,7 +30,10 @@ export default function Rsa() {
   } = useRsaLogic(addMessage);
 
   useEffect(() => {
-    hideLoading();
+    const timer = setTimeout(() => {
+      hideLoading();
+    }, 100);
+    return () => clearTimeout(timer);
   }, [hideLoading]);
 
   return (
