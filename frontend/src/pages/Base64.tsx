@@ -6,17 +6,15 @@ import { TabsBase64 } from "@/components/layouts/TabsBase64";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import { useLoading } from "@/contexts/LoadingContext";
 
-import { base64Testimonials } from "@/lib/base64-testimonials"; 
-import { useBase64Logic } from "@/hooks/useBase64Logic"; 
+import { base64Testimonials } from "@/lib/base64-testimonials";
+import { useBase64Logic } from "@/hooks/useBase64Logic";
 import { Base64Converter } from "@/components/base64/Base64Converter";
 
 export default function Base64() {
   const { hideLoading } = useLoading();
 
   useEffect(() => {
-    setTimeout(() => {
-      hideLoading();
-    }, 500);
+    hideLoading();
   }, [hideLoading]);
 
   const { input, setInput, output, mode, setMode, handleProcess } =

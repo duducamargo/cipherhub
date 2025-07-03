@@ -9,9 +9,7 @@ const NotFound = () => {
   const { hideLoading } = useLoading();
 
   useEffect(() => {
-    setTimeout(() => {
-      hideLoading();
-    }, 500);
+    hideLoading();
   }, [hideLoading]);
 
   return (

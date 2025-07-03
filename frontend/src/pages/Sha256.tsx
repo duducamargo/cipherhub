@@ -6,17 +6,15 @@ import { TabsSha256 } from "@/components/layouts/TabsSha256";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import { useLoading } from "@/contexts/LoadingContext";
 
-import { sha256Testimonials } from "@/lib/sha256-testimonials"; 
-import { useSha256Logic } from "@/hooks/useSha256Logic"; 
-import { Sha256Converter } from "@/components/sha256/Sha256Converter"; 
+import { sha256Testimonials } from "@/lib/sha256-testimonials";
+import { useSha256Logic } from "@/hooks/useSha256Logic";
+import { Sha256Converter } from "@/components/sha256/Sha256Converter";
 
 export default function Sha256() {
   const { hideLoading } = useLoading();
 
   useEffect(() => {
-    setTimeout(() => {
-      hideLoading();
-    }, 500);
+    hideLoading();
   }, [hideLoading]);
 
   const { input, setInput, output, handleProcess } = useSha256Logic();

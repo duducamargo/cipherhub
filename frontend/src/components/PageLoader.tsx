@@ -6,13 +6,25 @@ const PageLoader: React.FC = () => {
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black">
       <motion.div
         className="w-24 h-24"
+        transition={{
+          repeat: Infinity,
+          ease: "linear",
+          duration: 4,
+        }}
       >
-        <svg
+        <motion.svg
           width="100%"
           height="100%"
           viewBox="0 0 64 64"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          initial={{ scale: 1 }}
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{
+            repeat: Infinity,
+            duration: 1.5,
+            ease: "easeInOut",
+          }}
         >
           <defs>
             <linearGradient id="neon" x1="0" y1="0" x2="1" y2="1">
@@ -32,14 +44,18 @@ const PageLoader: React.FC = () => {
             fill="url(#neon)"
             filter="url(#glow)"
           />
-        </svg>
+        </motion.svg>
       </motion.div>
 
       <motion.p
-        className="mt-2 text-sm md:text-base text-[#e879f9] font-semibold tracking-wider"
+        className="mt-4 text-sm md:text-base text-[#e879f9] font-semibold tracking-wider"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.05 }}
+        animate={{ opacity: [0, 1, 0.5, 1] }}
+        transition={{
+          duration: 1,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
       >
         Carregando...
       </motion.p>
