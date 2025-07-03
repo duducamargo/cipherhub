@@ -2,9 +2,9 @@ FROM node:20-bullseye-slim
 
 WORKDIR /app
 
-COPY backend/package*.json ./
+COPY package*.json ./
 
-RUN npm install --omit=dev # Não instala devDependencies para produção
+RUN npm install --omit=dev
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends build-essential libc6 libstdc++6 zlib1g \
@@ -12,8 +12,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-
-COPY backend/ . 
+COPY . . 
 
 WORKDIR /app/src/
 
