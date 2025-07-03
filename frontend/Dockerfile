@@ -1,20 +1,21 @@
-FROM node:20-slim AS build
+FROM node:20-slim AS frontend_builder 
 
 WORKDIR /app
 
-COPY package*.json ./ 
+COPY package*.json ./
+RUN npm ci --legacy-peer-deps
 
-RUN npm ci --legacy-peer-deps 
-
-COPY . . 
+COPY . .
 
 RUN npm run build
+
+FROM node:20-slim
 
 RUN npm install -g serve
 
 WORKDIR /app
 
-COPY --from=build /app/dist ./
+COPY --from=frontend_builder /app/dist ./ 
 
 EXPOSE 5173
 
