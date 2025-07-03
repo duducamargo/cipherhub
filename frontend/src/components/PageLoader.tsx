@@ -19,7 +19,7 @@ const PageLoader: React.FC = () => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           initial={{ scale: 1 }}
-          animate={{ scale: [1, 1.1, 1] }}
+          animate={{ scale: [1, 1.05, 1] }}
           transition={{
             repeat: Infinity,
             duration: 1.5,
@@ -50,9 +50,9 @@ const PageLoader: React.FC = () => {
       <motion.p
         className="mt-4 text-sm md:text-base text-[#e879f9] font-semibold tracking-wider"
         initial={{ opacity: 0 }}
-        animate={{ opacity: [0, 1, 0.5, 1] }}
+        animate={{ opacity: [0.5, 1, 0.5] }}
         transition={{
-          duration: 1,
+          duration: 2,
           repeat: Infinity,
           ease: "easeInOut",
         }}
