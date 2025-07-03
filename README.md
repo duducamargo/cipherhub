@@ -2,6 +2,8 @@
 
 Welcome to **CipherHub**, a modern, interactive platform built to **demystify cryptography** through educational explanations, interactive tabs, and real code examples. Whether you're a student, developer, or security enthusiast, CipherHub makes it easier to **understand and visualize how cryptographic algorithms work**.
 
+**🚀 Live Demo:** The CipherHub application is now live and available for access at: [https://cipher-hub.up.railway.app/](https://cipher-hub.up.railway.app/)
+
 ---
 
 ## 💡 Table of Contents
@@ -109,7 +111,7 @@ To get CipherHub up and running locally using Docker Compose (recommended setup)
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/duducamargo/cipherhub.git](https://github.com/duducamargo/cipherhub.git)
+    git clone https://github.com/duducamargo/cipherhub.git
     cd cipherhub
     ```
 
