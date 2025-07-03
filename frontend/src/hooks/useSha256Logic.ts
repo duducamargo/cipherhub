@@ -8,6 +8,8 @@ interface UseSha256LogicReturn {
   handleProcess: () => Promise<void>;
 }
 
+const API_BASE = import.meta.env.VITE_APP_BACKEND_URL || "http://localhost:3001";
+
 export const useSha256Logic = (): UseSha256LogicReturn => {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
@@ -20,7 +22,7 @@ export const useSha256Logic = (): UseSha256LogicReturn => {
     setOutput("Processando..."); 
 
     try {
-      const response = await axios.post("http://localhost:3001/sha256", {
+      const response = await axios.post(`${API_BASE}/sha256`, {
         text: input,
       });
 

@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import axios from "axios";
 
+
 type Base64Mode = "encode" | "decode";
 
 interface UseBase64LogicReturn {
@@ -11,6 +12,8 @@ interface UseBase64LogicReturn {
   setMode: (mode: Base64Mode) => void;
   handleProcess: () => Promise<void>;
 }
+
+const API_BASE = import.meta.env.VITE_APP_BACKEND_URL || "http://localhost:3001";
 
 export const useBase64Logic = (): UseBase64LogicReturn => {
   const [input, setInput] = useState("");
@@ -26,9 +29,9 @@ export const useBase64Logic = (): UseBase64LogicReturn => {
 
     let endpoint = "";
     if (mode === "encode") {
-      endpoint = "http://localhost:3001/base64/encode";
+      endpoint = `${API_BASE}/base64/encode`;
     } else if (mode === "decode") {
-      endpoint = "http://localhost:3001/base64/decode";
+      endpoint = `${API_BASE}/base64/decode`;
     } else {
       setOutput("Modo inválido. Selecione codificar ou decodificar.");
       return;

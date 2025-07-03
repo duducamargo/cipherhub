@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// src/hooks/useRsaLogic.ts
 import { STATIC_D, STATIC_N, type ChatMessage, type ChatMode } from "@/components/rsa/types";
 import { useState, useCallback } from "react";
 
@@ -18,6 +17,8 @@ interface UseRsaLogicReturn {
   addMessage: (message: Omit<ChatMessage, "id" | "timestamp">) => void; 
 }
 
+const API_BASE = import.meta.env.VITE_APP_BACKEND_URL || "http://localhost:3001";
+
 export const useRsaLogic = (
   addMessage: (message: Omit<ChatMessage, "id" | "timestamp">) => void
 ): UseRsaLogicReturn => {
@@ -33,7 +34,7 @@ export const useRsaLogic = (
       content: "Gerando novas chaves RSA...",
     });
     try {
-      const response = await fetch("http://localhost:3001/rsa/generate-keys", {
+      const response = await fetch(`${API_BASE}/rsa/generate-keys`, {
         method: "POST",
       });
       if (!response.ok) {
@@ -101,7 +102,7 @@ export const useRsaLogic = (
     }
 
     try {
-      const response = await fetch("http://localhost:3001/rsa", {
+      const response = await fetch(`${API_BASE}/rsa`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
