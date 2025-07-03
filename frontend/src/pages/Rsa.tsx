@@ -1,12 +1,10 @@
-/* eslint-disable prefer-const */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { DetailsCard } from "@/components/DetailsCard";
 import { TabsRSA } from "@/components/layouts/TabsRSA";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import { useLoading } from "@/contexts/LoadingContext";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 import { useChatMessages } from "@/hooks/useChatMessages";
 import { useRsaLogic } from "@/hooks/useRsaLogic";

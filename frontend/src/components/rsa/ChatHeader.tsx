@@ -1,4 +1,3 @@
-// src/components/rsa/ChatHeader.tsx
 import React from "react";
 import { KeyRound, Zap } from "lucide-react";
 import { STATIC_D, STATIC_N, type ChatHeaderProps } from "./types";

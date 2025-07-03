@@ -1,4 +1,3 @@
-// src/components/base64/Base64Converter.tsx
 import React from "react";
 import { HyperText } from "@/components/ui/hyper-text";
 import { Lock, Unlock, SendHorizonal } from "lucide-react"; 

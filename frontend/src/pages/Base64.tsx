@@ -1,14 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useEffect } from "react";
-// Remover axios
 import { DetailsCard } from "@/components/DetailsCard";
 import { TabsBase64 } from "@/components/layouts/TabsBase64";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import { useLoading } from "@/contexts/LoadingContext";
 
-// Novos imports modularizados
 import { base64Testimonials } from "@/lib/base64-testimonials"; 
 import { useBase64Logic } from "@/hooks/useBase64Logic"; 
 import { Base64Converter } from "@/components/base64/Base64Converter";

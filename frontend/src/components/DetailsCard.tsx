@@ -29,7 +29,7 @@ export const DetailsCard: React.FC<DetailsCardProps> = ({
 }) => {
   return (
     <div className="neon-runner-border w-full max-w-6xl mx-auto mb-12 px-8 py-10 bg-gradient-to-br from-neutral-900 via-neutral-950 to-zinc-900 rounded-3xl shadow-[0_0_25px_rgba(0,0,0,0.7)]">
-      <h2 className="text-3xl font-bold text-white mb-10 tracking-tight flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
+      <h2 className="text-3xl font-bold text-white mb-10 tracking-tight flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text">
         🚀 Detalhes do Algoritmo
       </h2>
 

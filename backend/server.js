@@ -7,129 +7,209 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const shaPath = path.join(__dirname, "src", "output", "sha256.exe");
-const rsaPath = path.join(__dirname, "src", "output", "rsa.exe");
-const base64Path = path.join(__dirname, "src", "output", "base64.exe");
+const isWindows = process.platform === "win32";
+const executableExtension = isWindows ? ".exe" : ""; 
 
-app.post("/sha256", (req, res) => {
-  const { text } = req.body;
-  exec(`"${shaPath}" "${text}"`, (err, stdout, stderr) => {
-    if (err) return res.status(500).json({ error: stderr });
-    res.json({ result: stdout.trim() });
-  });
-});
+const shaPath = path.join(
+  __dirname,
+  "src",
+  "output",
+  `sha256${executableExtension}`
+);
+const rsaPath = path.join(
+  __dirname,
+  "src",
+  "output",
+  `rsa${executableExtension}`
+);
+const base64Path = path.join(
+  __dirname,
+  "src",
+  "output",
+  `base64${executableExtension}`
+);
 
-app.post("/base64/encode", (req, res) => {
-  const { text } = req.body;
-  exec(`"${base64Path}" 1 "${text}"`, (err, stdout, stderr) => {
-    if (err) return res.status(500).json({ error: stderr });
-    res.json({ result: stdout.trim() });
-  });
-});
+async function executeCCommand(command, res, debugName = "C Program") {
+  console.log(`${debugName} - Executing command: ${command}`);
 
-app.post("/base64/decode", (req, res) => {
-  const { text } = req.body;
-  exec(`"${base64Path}" 2 "${text}"`, (err, stdout, stderr) => {
-    if (err) return res.status(500).json({ error: stderr });
-    res.json({ result: stdout.trim() });
-  });
-});
-
-app.post("/rsa/generate-keys", (req, res) => {
-  const command = `"${rsaPath}" generate-keys`;
-  exec(command, (err, stdout, stderr) => {
-    if (err) {
-      console.error(
-        `Error executing C program for key generation: ${err.message}`
-      );
-      console.error("Stderr:", stderr);
-      return res
-        .status(500)
-        .json({ error: `Failed to generate keys: ${stderr}` });
-    }
-    if (stderr) {
-      console.warn(
-        "C program Stderr (Warnings/Info during key generation):",
-        stderr
-      );
-    }
-
-    try {
-      const jsonString = stdout.trim();
-      const keys = JSON.parse(jsonString);
-      res.json(keys);
-    } catch (parseError) {
-      console.error("JSON Parse Error from key generation:", parseError);
-      console.error("Raw stdout for key generation error:", stdout);
-      res
-        .status(500)
-        .json({
-          error: "Failed to parse key generation output.",
-          rawOutput: stdout,
+  return new Promise((resolve, reject) => {
+    exec(command, (err, stdout, stderr) => {
+      if (err) {
+        console.error(`${debugName} Exec Error:`, err);
+        console.error("Stderr:", stderr);
+        console.error("Stdout:", stdout);
+        return reject({
+          status: 500,
+          error: `${debugName} execution failed.`,
+          details: err.message,
+          stderr_output: stderr.trim(),
+          stdout_output: stdout.trim(),
         });
-    }
+      }
+      if (stderr) {
+        console.warn(`${debugName} Stderr (Warning/Info):`, stderr);
+      }
+      resolve(stdout.trim());
+    });
   });
+}
+app.post("/sha256", async (req, res) => {
+  const { text } = req.body;
+
+  if (!text || text.trim() === "") {
+    return res.status(400).json({ error: "Text input cannot be empty." });
+  }
+
+  const sanitizedText = text.trim();
+
+  try {
+    const stdout = await executeCCommand(
+      `"${shaPath}" "${sanitizedText}"`,
+      res,
+      "SHA256 Program"
+    );
+
+    if (!stdout) {
+      return res.status(500).json({
+        error: "SHA256 program returned empty output.",
+        rawOutput: stdout,
+      });
+    }
+
+    res.json({ result: stdout });
+  } catch (error) {
+    res.status(error.status || 500).json(error);
+  }
 });
 
-app.post("/rsa", (req, res) => {
+app.post("/base64/encode", async (req, res) => {
+  const { text } = req.body;
+
+  if (!text || text.trim() === "") {
+    return res.status(400).json({ error: "Text input cannot be empty." });
+  }
+
+  const sanitizedText = text.trim();
+
+  try {
+    const stdout = await executeCCommand(
+      `"${base64Path}" 1 "${sanitizedText}"`,
+      res,
+      "Base64 Encode Program"
+    );
+    res.json({ result: stdout });
+  } catch (error) {
+    res.status(error.status || 500).json(error);
+  }
+});
+
+app.post("/base64/decode", async (req, res) => {
+  const { text } = req.body;
+
+  if (!text || text.trim() === "") {
+    return res.status(400).json({ error: "Text input cannot be empty." });
+  }
+
+  const sanitizedText = text.trim();
+
+  try {
+    const stdout = await executeCCommand(
+      `"${base64Path}" 2 "${sanitizedText}"`,
+      res,
+      "Base64 Decode Program"
+    );
+    res.json({ result: stdout });
+  } catch (error) {
+    res.status(error.status || 500).json(error);
+  }
+});
+
+app.post("/rsa/generate-keys", async (req, res) => {
+  try {
+    const stdout = await executeCCommand(
+      `"${rsaPath}" generate-keys`,
+      res,
+      "RSA Key Generation Program"
+    );
+
+    let keys;
+    try {
+      keys = JSON.parse(stdout);
+    } catch (parseError) {
+      console.error("RSA Key Generation - JSON Parse Error:", parseError);
+      console.error("RSA Key Generation - Raw stdout:", stdout);
+      return res.status(500).json({
+        error: "Failed to parse key generation output as JSON.",
+        parseErrorDetails: parseError.message,
+        rawOutput: stdout,
+      });
+    }
+
+    res.json(keys);
+  } catch (error) {
+    res.status(error.status || 500).json(error);
+  }
+});
+
+app.post("/rsa", async (req, res) => {
   const { text, n, e, d, mode } = req.body;
 
-  if (!text || !n || !mode) {
-    return res
-      .status(400)
-      .json({ error: "Missing required parameters: text, n, or mode." });
+  if (
+    !text ||
+    text.trim() === "" ||
+    !n ||
+    n.trim() === "" ||
+    !mode ||
+    (mode !== "encrypt" && mode !== "decrypt")
+  ) {
+    return res.status(400).json({
+      error: "Missing or invalid required parameters: text, n, mode.",
+    });
   }
-  if (mode === "encrypt" && !e) {
+  if (mode === "encrypt" && (!e || e.trim() === "")) {
     return res
       .status(400)
       .json({ error: 'Missing public key "e" for encryption.' });
   }
-  if (mode === "decrypt" && !d) {
+  if (mode === "decrypt" && (!d || d.trim() === "")) {
     return res
       .status(400)
       .json({ error: 'Missing private key "d" for decryption.' });
   }
 
-  let command;
-  const inputForC = text;
+  const sanitizedText = text.trim();
+  const sanitizedN = n.trim();
+  const sanitizedE = e ? e.trim() : "";
+  const sanitizedD = d ? d.trim() : "";
 
+  let command;
   if (mode === "encrypt") {
-    command = `"${rsaPath}" encrypt "${inputForC}" "${n}" "${e}"`;
-  } else if (mode === "decrypt") {
-    command = `"${rsaPath}" decrypt "${inputForC}" "${n}" "${d}"`;
+    command = `"${rsaPath}" encrypt "${sanitizedText}" ${sanitizedN} ${sanitizedE}`;
   } else {
-    return res
-      .status(400)
-      .json({ error: 'Invalid mode specified. Use "encrypt" or "decrypt".' });
+    // mode === "decrypt"
+    command = `"${rsaPath}" decrypt "${sanitizedText}" ${sanitizedN} ${sanitizedD}`;
   }
 
-  exec(command, (err, stdout, stderr) => {
-    if (err) {
-      console.error(`RSA Exec Error for command: ${command}`, err);
-      console.error("Stderr:", stderr);
-      console.error("Stdout:", stdout);
+  try {
+    const stdout = await executeCCommand(command, res, `RSA ${mode} Program`);
+
+    let rsaResult;
+    try {
+      rsaResult = JSON.parse(stdout);
+    } catch (parseError) {
+      console.error(`RSA ${mode} Program - JSON Parse Error:`, parseError);
+      console.error(`RSA ${mode} Program - Raw stdout:`, stdout);
       return res.status(500).json({
-        error: `Erro de execução no programa C: ${stderr || "Nenhum"}.`,
-        details: stdout.trim(),
+        error: `Failed to parse ${mode} output as JSON.`,
+        parseErrorDetails: parseError.message,
+        rawOutput: stdout,
       });
-    }
-    if (stderr) {
-      console.warn("RSA Program Stderr (Warning/Info):", stderr);
     }
 
-    try {
-      const jsonString = stdout.trim();
-      const rsaResult = JSON.parse(jsonString);
-      res.json(rsaResult);
-    } catch (parseError) {
-      console.error("RSA JSON Parse Error:", parseError);
-      console.error("RSA Raw stdout for parsing error:", stdout);
-      return res.status(500).json({
-        error: `Erro ao analisar a saída JSON do programa C. Saída bruta: "${stdout}"`,
-        parseErrorDetails: parseError.message,
-      });
-    }
-  });
+    res.json(rsaResult);
+  } catch (error) {
+    res.status(error.status || 500).json(error);
+  }
 });
 
 app.listen(3001, () => {

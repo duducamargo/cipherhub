@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import HomeTitle from "../components/layouts/HomeTitle";
 import CanvasRevealHome from "@/components/layouts/CanvasRevealHome";
 import { TabsHome } from "@/components/layouts/TabsHome";
