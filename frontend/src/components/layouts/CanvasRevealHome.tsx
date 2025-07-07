@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
 import { AnimatePresence, motion } from "framer-motion";
-import { Link, useNavigate, useLocation } from "react-router-dom"; 
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useLoading } from "@/contexts/LoadingContext";
 
 export default function CanvasRevealHome() {
@@ -26,7 +26,7 @@ export default function CanvasRevealHome() {
           />
         </Card>
         <Card
-          to="/sha256" 
+          to="/sha256"
           title="Criptografia SHA-256"
           icon={<AceternityIcon />}
         >
@@ -52,7 +52,7 @@ export default function CanvasRevealHome() {
 const Card = ({
   title,
   icon,
-  to, 
+  to,
   children,
 }: {
   title: string;
@@ -61,24 +61,32 @@ const Card = ({
   children?: React.ReactNode;
 }) => {
   const [hovered, setHovered] = React.useState(false);
-  const { showLoading } = useLoading(); 
-  const navigate = useNavigate(); 
+  const { showLoading } = useLoading();
+  const navigate = useNavigate();
   const location = useLocation();
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  useEffect(() => {
+    const checkSize = () => setIsMobile(window.innerWidth < 768);
+    checkSize();
+    window.addEventListener("resize", checkSize);
+    return () => window.removeEventListener("resize", checkSize);
+  }, []);
 
   const handleCardClick = () => {
     if (location.pathname === to) {
-      return; 
+      return;
     }
-    showLoading(); 
-    navigate(to); 
+    showLoading();
+    navigate(to);
   };
 
   return (
     <Link
       to={to}
       onClick={(e) => {
-        e.preventDefault(); 
-        handleCardClick(); 
+        e.preventDefault();
+        handleCardClick();
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -90,7 +98,7 @@ const Card = ({
       <Icon className="absolute h-6 w-6 -bottom-3 -right-3 text-white" />
 
       <AnimatePresence>
-        {hovered && (
+        {(hovered || isMobile) && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -102,10 +110,10 @@ const Card = ({
       </AnimatePresence>
 
       <div className="relative z-20">
-        <div className="text-center group-hover/canvas-card:-translate-y-4 group-hover/canvas-card:opacity-0 transition duration-200 w-full mx-auto flex items-center justify-center">
+        <div className="hidden text-center group-hover/canvas-card:-translate-y-4 group-hover/canvas-card:opacity-0 transition duration-200 w-full mx-auto md:flex items-center justify-center">
           {icon}
         </div>
-        <h2 className="dark:text-white text-xl opacity-0 group-hover/canvas-card:opacity-100 relative z-10 text-black mt-4 font-bold group-hover/canvas-card:text-white group-hover/canvas-card:-translate-y-2 transition duration-200">
+        <h2 className="opacity-100 text-white dark:text-white text-xl md:opacity-0 group-hover/canvas-card:opacity-100 relative z-10 md:text-black mt-4 font-bold group-hover/canvas-card:text-white group-hover/canvas-card:-translate-y-2 transition duration-200">
           {title}
         </h2>
       </div>
