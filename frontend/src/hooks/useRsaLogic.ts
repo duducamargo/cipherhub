@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { STATIC_D, STATIC_N, type ChatMessage, type ChatMode } from "@/components/rsa/types";
+import {
+  STATIC_D,
+  STATIC_N,
+  type ChatMessage,
+  type ChatMode,
+} from "@/components/rsa/types";
 import { useState, useCallback } from "react";
-
 
 interface UseRsaLogicReturn {
   nKey: string;
@@ -14,10 +18,15 @@ interface UseRsaLogicReturn {
   setCurrentMode: (mode: ChatMode) => void;
   handleGenerateKeys: () => Promise<void>;
   handleProcessMessage: () => Promise<void>;
-  addMessage: (message: Omit<ChatMessage, "id" | "timestamp">) => void; 
+  addMessage: (message: Omit<ChatMessage, "id" | "timestamp">) => void;
 }
 
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:3001";
+
+const isValidRSAKey = (key: string): boolean => {
+  if (!key) return false;
+  return /^\d+$/.test(key) && BigInt(key) > 0;
+};
 
 export const useRsaLogic = (
   addMessage: (message: Omit<ChatMessage, "id" | "timestamp">) => void
@@ -42,6 +51,15 @@ export const useRsaLogic = (
         throw new Error(errorData.error || "Erro ao gerar chaves no backend.");
       }
       const data = await response.json();
+
+      if (
+        !isValidRSAKey(data.n) ||
+        !isValidRSAKey(data.e) ||
+        !isValidRSAKey(data.d)
+      ) {
+        throw new Error("As chaves geradas pelo backend são inválidas.");
+      }
+
       setNKey(data.n);
       setEKey(data.e);
       addMessage({
@@ -59,7 +77,7 @@ export const useRsaLogic = (
         }`,
       });
     }
-  }, [addMessage]); // Dependência em addMessage
+  }, [addMessage]);
 
   const handleProcessMessage = useCallback(async () => {
     const messageToSend = inputMessage.trim();
@@ -76,11 +94,12 @@ export const useRsaLogic = (
       usedNKey = nKey;
       usedEKey = eKey;
 
-      if (!usedNKey || !usedEKey) {
+      if (!isValidRSAKey(usedNKey) || !isValidRSAKey(usedEKey)) {
         addMessage({
           sender: "system",
           type: "error",
-          content: "Erro: N e E são necessários para criptografar.",
+          content:
+            "Erro: N e E são necessários e devem ser números válidos para criptografar.",
         });
         return;
       }
@@ -88,14 +107,14 @@ export const useRsaLogic = (
       // currentMode === "decrypt"
       usedNKey = STATIC_N;
       usedDKey = STATIC_D;
-      usedEKey = ""; 
+      usedEKey = "";
 
-      if (!usedNKey || !usedDKey) {
+      if (!isValidRSAKey(usedNKey) || !isValidRSAKey(usedDKey)) {
         addMessage({
           sender: "system",
           type: "error",
           content:
-            "Erro interno: Chaves estáticas de descriptografia não definidas.",
+            "Erro interno: Chaves estáticas de descriptografia (N e D) não definidas ou inválidas.",
         });
         return;
       }
@@ -167,7 +186,7 @@ export const useRsaLogic = (
         }`,
       });
     }
-  }, [inputMessage, nKey, eKey, currentMode, addMessage]); 
+  }, [inputMessage, nKey, eKey, currentMode, addMessage]);
 
   return {
     nKey,
@@ -180,6 +199,6 @@ export const useRsaLogic = (
     setCurrentMode,
     handleGenerateKeys,
     handleProcessMessage,
-    addMessage, 
+    addMessage,
   };
 };
