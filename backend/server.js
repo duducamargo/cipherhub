@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 const isWindows = process.platform === "win32";
-const executableExtension = isWindows ? ".exe" : "";
+const executableExtension = isWindows ? ".exe" : ""; 
 
 const shaPath = path.join(
   __dirname,
@@ -154,78 +154,61 @@ app.post("/rsa/generate-keys", async (req, res) => {
 app.post("/rsa", async (req, res) => {
   const { text, n, e, d, mode } = req.body;
 
-  if (!text || !n || (mode === "encrypt" && !e) || (mode === "decrypt" && !d)) {
+  if (
+    !text ||
+    text.trim() === "" ||
+    !n ||
+    n.trim() === "" ||
+    !mode ||
+    (mode !== "encrypt" && mode !== "decrypt")
+  ) {
+    return res.status(400).json({
+      error: "Missing or invalid required parameters: text, n, mode.",
+    });
+  }
+  if (mode === "encrypt" && (!e || e.trim() === "")) {
     return res
       .status(400)
-      .json({ error: "Dados incompletos: texto, N e E/D são obrigatórios." });
+      .json({ error: 'Missing public key "e" for encryption.' });
+  }
+  if (mode === "decrypt" && (!d || d.trim() === "")) {
+    return res
+      .status(400)
+      .json({ error: 'Missing private key "d" for decryption.' });
   }
 
-  let bigIntN, bigIntE, bigIntD;
+  const sanitizedText = text.trim();
+  const sanitizedN = n.trim();
+  const sanitizedE = e ? e.trim() : "";
+  const sanitizedD = d ? d.trim() : "";
+
+  let command;
+  if (mode === "encrypt") {
+    command = `"${rsaPath}" encrypt "${sanitizedText}" ${sanitizedN} ${sanitizedE}`;
+  } else {
+    // mode === "decrypt"
+    command = `"${rsaPath}" decrypt "${sanitizedText}" ${sanitizedN} ${sanitizedD}`;
+  }
+
   try {
-    bigIntN = BigInt(n);
-    if (mode === "encrypt") bigIntE = BigInt(e);
-    if (mode === "decrypt") bigIntD = BigInt(d);
-  } catch (parseError) {
-    return res
-      .status(400)
-      .json({ error: "Chaves (N, E, D) devem ser números inteiros válidos." });
-  }
+    const stdout = await executeCCommand(command, res, `RSA ${mode} Program`);
 
-  const MIN_N_LENGTH = 3; 
-  const MIN_EXP_LENGTH = 1; 
-
-  if (bigIntN.toString().length < MIN_N_LENGTH || bigIntN <= 1n) {
-    return res
-      .status(400)
-      .json({
-        error: "Chave N inválida: N deve ser um número inteiro positivo muito grande (geralmente com centenas de dígitos) e composto (formado pela multiplicação de dois números primos grandes).",
+    let rsaResult;
+    try {
+      rsaResult = JSON.parse(stdout);
+    } catch (parseError) {
+      console.error(`RSA ${mode} Program - JSON Parse Error:`, parseError);
+      console.error(`RSA ${mode} Program - Raw stdout:`, stdout);
+      return res.status(500).json({
+        error: `Failed to parse ${mode} output as JSON.`,
+        parseErrorDetails: parseError.message,
+        rawOutput: stdout,
       });
-  }
-  if (
-    mode === "encrypt" &&
-    (bigIntE.toString().length < MIN_EXP_LENGTH || bigIntE <= 1n)
-  ) {
-    return res
-      .status(400)
-      .json({ error: "Chave E inválida: E deve ser um número inteiro positivo, como 3 ou 65537. Geralmente, números pequenos e ímpares são usados para esta chave." });
-  }
-  if (
-    mode === "decrypt" &&
-    (bigIntD.toString().length < MIN_EXP_LENGTH || bigIntD <= 1n)
-  ) {
-    return res
-      .status(400)
-      .json({ error: "Chave D inválida: deve ser um número positivo." });
-  }
-
-  try {
-    const command = `./rsa_program --mode ${mode} --n ${n} --e ${e} --d ${d} --text "${text}"`;
-    const { stdout, stderr } = await exec(command); 
-
-    if (stderr) {
-      console.error("Erro do programa C:", stderr);
-      return res
-        .status(400)
-        .json({ error: `Erro na operação RSA: ${stderr.trim()}` });
     }
 
-    const result = JSON.parse(stdout); 
-
-    if (result.success === false) {
-      return res
-        .status(400)
-        .json({ error: result.message || "Chaves RSA inválidas fornecidas." });
-    }
-
-    res.json(result);
+    res.json(rsaResult);
   } catch (error) {
-    console.error("Erro ao executar o programa C:", error);
-    return res
-      .status(500)
-      .json({
-        error:
-          "Erro ao processar RSA: As chaves fornecidas podem ser inválidas. Certifique-se de que N é um número inteiro positivo muito grande (geralmente com centenas de dígitos e composto pela multiplicação de dois números primos grandes). As chaves E e D também devem ser números inteiros positivos válidos.",
-      });
+    res.status(error.status || 500).json(error);
   }
 });
 

@@ -23,9 +23,14 @@ interface UseRsaLogicReturn {
 
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:3001";
 
-const isValidRSAKey = (key: string): boolean => {
+const isValidNumericAndPositive = (key: string): boolean => {
   if (!key) return false;
-  return /^\d+$/.test(key) && BigInt(key) > 0;
+  try {
+    return /^\d+$/.test(key) && BigInt(key) > 0n;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (e) {
+    return false; 
+  }
 };
 
 export const useRsaLogic = (
@@ -53,11 +58,13 @@ export const useRsaLogic = (
       const data = await response.json();
 
       if (
-        !isValidRSAKey(data.n) ||
-        !isValidRSAKey(data.e) ||
-        !isValidRSAKey(data.d)
+        !isValidNumericAndPositive(data.n) ||
+        !isValidNumericAndPositive(data.e) ||
+        !isValidNumericAndPositive(data.d)
       ) {
-        throw new Error("As chaves geradas pelo backend são inválidas.");
+        throw new Error(
+          "As chaves geradas pelo backend são inválidas (formato incorreto)."
+        );
       }
 
       setNKey(data.n);
@@ -90,31 +97,78 @@ export const useRsaLogic = (
     let usedEKey: string;
     let usedDKey: string = "";
 
+    const MIN_N_DIGITS_FOR_FRONTEND = 3; 
+
+    if (!isValidNumericAndPositive(nKey)) {
+      addMessage({
+        sender: "system",
+        type: "error",
+        content: "Chave N inválida: N deve ser um número inteiro positivo.",
+      });
+      return;
+    }
+    if (nKey.length < MIN_N_DIGITS_FOR_FRONTEND) {
+      addMessage({
+        sender: "system",
+        type: "error",
+        content:
+          "Chave N inválida: N deve ser um número inteiro positivo muito grande (geralmente com centenas de dígitos e composto pela multiplicação de dois números primos grandes).",
+      });
+      return;
+    }
+    const bigIntN = BigInt(nKey);
+    if (bigIntN <= 1n) {
+      addMessage({
+        sender: "system",
+        type: "error",
+        content:
+          "Chave N inválida: N deve ser um número inteiro positivo muito grande (geralmente com centenas de dígitos e composto pela multiplicação de dois números primos grandes).",
+      });
+      return;
+    }
+
     if (currentMode === "encrypt") {
       usedNKey = nKey;
       usedEKey = eKey;
 
-      if (!isValidRSAKey(usedNKey) || !isValidRSAKey(usedEKey)) {
+      if (!isValidNumericAndPositive(usedEKey)) {
+        addMessage({
+          sender: "system",
+          type: "error",
+          content: "Chave E inválida: E deve ser um número inteiro positivo.",
+        });
+        return;
+      }
+      const bigIntE = BigInt(usedEKey);
+      if (bigIntE <= 1n) {
         addMessage({
           sender: "system",
           type: "error",
           content:
-            "Erro: N e E são necessários e devem ser números válidos para criptografar.",
+            "Chave E inválida: E deve ser um número inteiro positivo, como 3 ou 65537. Geralmente, números pequenos e ímpares são usados para esta chave.",
         });
         return;
       }
     } else {
       // currentMode === "decrypt"
       usedNKey = STATIC_N;
-      usedDKey = STATIC_D;
+      usedDKey = STATIC_D; 
       usedEKey = "";
 
-      if (!isValidRSAKey(usedNKey) || !isValidRSAKey(usedDKey)) {
+      if (!isValidNumericAndPositive(usedDKey)) {
         addMessage({
           sender: "system",
           type: "error",
-          content:
-            "Erro interno: Chaves estáticas de descriptografia (N e D) não definidas ou inválidas.",
+          content: "Chave D inválida: D deve ser um número inteiro positivo.",
+        });
+        return;
+      }
+      const bigIntD = BigInt(usedDKey);
+      if (bigIntD <= 1n) {
+        addMessage({
+          sender: "system",
+          type: "error",
+          content: "Chave D inválida: D deve ser um número inteiro positivo.",
         });
         return;
       }
@@ -136,7 +190,8 @@ export const useRsaLogic = (
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(
-          errorData.error || "Erro desconhecido ao processar no backend."
+          errorData.error ||
+            "Erro ao processar RSA: As chaves fornecidas podem ser inválidas. Certifique-se de que N é um número inteiro positivo muito grande (geralmente com centenas de dígitos e composto pela multiplicação de dois números primos grandes). As chaves E e D também devem ser números inteiros positivos válidos."
         );
       }
 
@@ -177,16 +232,18 @@ export const useRsaLogic = (
         }
       }
     } catch (error: any) {
-      console.error("Erro na comunicação com o backend:", error);
+      console.error("Erro na comunicação com o backend ou validação:", error);
       addMessage({
         sender: "system",
         type: "error",
         content: `Erro: ${
-          error.message || "Não foi possível conectar ao servidor."
+          error.message ||
+          "Não foi possível conectar ao servidor ou houve um erro inesperado."
         }`,
       });
     }
-  }, [inputMessage, nKey, eKey, currentMode, addMessage]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputMessage, nKey, eKey, currentMode, addMessage, STATIC_N, STATIC_D]);
 
   return {
     nKey,
