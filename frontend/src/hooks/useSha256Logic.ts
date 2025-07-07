@@ -26,10 +26,11 @@ export const useSha256Logic = (): UseSha256LogicReturn => {
         text: input,
       });
 
-      console.log("Resposta da API SHA-256:", response.data.result);
+      // console.log("Resposta da API SHA-256:", response.data.result);
       setOutput(response.data.result);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      console.error("Erro ao processar SHA-256:", error);
+      // console.error("Erro ao processar SHA-256:", error);
       setOutput("Erro ao se comunicar com a API SHA-256.");
     }
   }, [input]); 

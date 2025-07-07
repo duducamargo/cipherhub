@@ -75,7 +75,7 @@ export const useRsaLogic = (
         content: `Chaves geradas:\nN: ${data.n}\nE: ${data.e}\nD: ${data.d}`,
       });
     } catch (error: any) {
-      console.error("Erro ao gerar chaves:", error);
+      // console.error("Erro ao gerar chaves:", error);
       addMessage({
         sender: "system",
         type: "error",
@@ -232,7 +232,7 @@ export const useRsaLogic = (
         }
       }
     } catch (error: any) {
-      console.error("Erro na comunicação com o backend ou validação:", error);
+      // console.error("Erro na comunicação com o backend ou validação:", error);
       addMessage({
         sender: "system",
         type: "error",

@@ -42,10 +42,11 @@ export const useBase64Logic = (): UseBase64LogicReturn => {
         text: input,
       });
 
-      console.log(`Resposta da API Base64 (${mode}):`, response.data.result);
+      // console.log(`Resposta da API Base64 (${mode}):`, response.data.result);
       setOutput(response.data.result);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      console.error(`Erro ao processar Base64 (${mode}):`, error);
+      // console.error(`Erro ao processar Base64 (${mode}):`, error);
       setOutput(`Erro ao se comunicar com a API Base64.`);
     }
   }, [input, mode]); 

@@ -30,14 +30,14 @@ const base64Path = path.join(
 );
 
 async function executeCCommand(command, res, debugName = "C Program") {
-  console.log(`${debugName} - Executing command: ${command}`);
+  // console.log(`${debugName} - Executing command: ${command}`);
 
   return new Promise((resolve, reject) => {
     exec(command, (err, stdout, stderr) => {
       if (err) {
-        console.error(`${debugName} Exec Error:`, err);
-        console.error("Stderr:", stderr);
-        console.error("Stdout:", stdout);
+        // console.error(`${debugName} Exec Error:`, err);
+        // console.error("Stderr:", stderr);
+        // console.error("Stdout:", stdout);
         return reject({
           status: 500,
           error: `${debugName} execution failed.`,
@@ -47,7 +47,7 @@ async function executeCCommand(command, res, debugName = "C Program") {
         });
       }
       if (stderr) {
-        console.warn(`${debugName} Stderr (Warning/Info):`, stderr);
+        // console.warn(`${debugName} Stderr (Warning/Info):`, stderr);
       }
       resolve(stdout.trim());
     });
@@ -136,8 +136,8 @@ app.post("/rsa/generate-keys", async (req, res) => {
     try {
       keys = JSON.parse(stdout);
     } catch (parseError) {
-      console.error("RSA Key Generation - JSON Parse Error:", parseError);
-      console.error("RSA Key Generation - Raw stdout:", stdout);
+      // console.error("RSA Key Generation - JSON Parse Error:", parseError);
+      // console.error("RSA Key Generation - Raw stdout:", stdout);
       return res.status(500).json({
         error: "Failed to parse key generation output as JSON.",
         parseErrorDetails: parseError.message,
@@ -197,8 +197,8 @@ app.post("/rsa", async (req, res) => {
     try {
       rsaResult = JSON.parse(stdout);
     } catch (parseError) {
-      console.error(`RSA ${mode} Program - JSON Parse Error:`, parseError);
-      console.error(`RSA ${mode} Program - Raw stdout:`, stdout);
+      // console.error(`RSA ${mode} Program - JSON Parse Error:`, parseError);
+      // console.error(`RSA ${mode} Program - Raw stdout:`, stdout);
       return res.status(500).json({
         error: `Failed to parse ${mode} output as JSON.`,
         parseErrorDetails: parseError.message,
