@@ -6,7 +6,7 @@
 
 Bem-vindo ao **CipherHub**, uma plataforma moderna e interativa criada para **desmistificar a criptografia** através de explicações educacionais, abas interativas e exemplos de código reais. Seja você um estudante, desenvolvedor ou entusiasta de segurança, o CipherHub facilita o **entendimento e a visualização de como os algoritmos criptográficos funcionam**.
 
-**🚀 Demonstração ao Vivo:** O aplicativo CipherHub está agora online e disponível em: [https://cipher-hub.up.railway.app/](https://cipher-hub.up.railway.app/)
+**🚀 Demonstração ao Vivo:** O aplicativo CipherHub está agora online e disponível em: [https://cipherhub.software/](https://cipherhub.software/)
 
 ---
 
