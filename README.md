@@ -4,7 +4,7 @@
 
 Welcome to **CipherHub**, a modern, interactive platform built to **demystify cryptography** through educational explanations, interactive tabs, and real code examples. Whether you're a student, developer, or security enthusiast, CipherHub makes it easier to **understand and visualize how cryptographic algorithms work**.
 
-**🚀 Live Demo:** The CipherHub application is now live and available for access at: [https://cipher-hub.up.railway.app/](https://cipher-hub.up.railway.app/)
+**🚀 Live Demo:** The CipherHub application is now live and available for access at: [https://cipherhub.software/](https://cipherhub.software/)
 
 ---
 
