@@ -113,7 +113,7 @@ const Card = ({
         <div className="hidden text-center group-hover/canvas-card:-translate-y-4 group-hover/canvas-card:opacity-0 transition duration-200 w-full mx-auto md:flex items-center justify-center">
           {icon}
         </div>
-        <h2 className="opacity-100 text-white dark:text-white text-xl md:opacity-0 group-hover/canvas-card:opacity-100 relative z-10 md:text-black mt-4 font-bold group-hover/canvas-card:text-white group-hover/canvas-card:-translate-y-2 transition duration-200">
+        <h2 className="opacity-100 md:text-black dark:text-white text-xl md:opacity-0 group-hover/canvas-card:opacity-100 relative z-10 md:text-black mt-4 font-bold group-hover/canvas-card:text-white group-hover/canvas-card:-translate-y-2 transition duration-200">
           {title}
         </h2>
       </div>
