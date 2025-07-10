@@ -180,4 +180,4 @@ Pull requests são bem-vindos! Se você tem ideias para novos algoritmos, melhor
 
 ---
 
-Feito com ❤️ para aprendizado, segurança e design elegante.
+Feito com ❤️ para aprender segurança.

@@ -177,4 +177,4 @@ Pull requests are welcome! If you have ideas for new algorithms, UI improvements
 
 ---
 
-Made with ❤️ for learning, security, and elegant design.
+Made with ❤️ for learn security.
